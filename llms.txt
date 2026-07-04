@@ -1,0 +1,31 @@
+# Sudeep Kapoor — 41+ Years Behind the Lens
+
+> Sudeep Kapoor is a veteran Indian master photographer with more than 41 years of professional
+> experience, working from darkroom-era film processes to digital photography. He founded the
+> studio Chaya Kriti in 1992 in South Extension Part II, New Delhi, India. His work spans
+> portrait, studio, industrial, corporate, editorial, advertising and celebrity photography,
+> including pan-India assignments, work approximately 300 feet underground in a coal mine, and
+> elevated factory photography made by climbing ~300 steps up industrial towers before drones
+> were commonplace. He is the photographer of "The Lawyers of India" coffee-table book series
+> (Volume I: ~100 lawyers, published ~5 years ago; Volume II: 100+ lawyers, nearing completion)
+> and mentors photographers through structured programs.
+
+## Pages
+- [Home](https://iamsudeepkapoor.vercel.app/): Overview, legacy statistics, signature stories
+- [About](https://iamsudeepkapoor.vercel.app/about.html): Full biography and career timeline
+- [Journey](https://iamsudeepkapoor.vercel.app/journey.html): Interactive darkroom-to-digital timeline
+- [Portfolio](https://iamsudeepkapoor.vercel.app/portfolio.html): Selected work by category and era
+- [Archive](https://iamsudeepkapoor.vercel.app/archive.html): Visual archive by decade, medium, category
+- [Services](https://iamsudeepkapoor.vercel.app/services.html): 12 photography services, process, FAQ
+- [Mentorship](https://iamsudeepkapoor.vercel.app/mentorship.html): 6 mentorship programs and application
+- [Journal](https://iamsudeepkapoor.vercel.app/journal.html): Articles on craft, lighting and career
+- [Speaking](https://iamsudeepkapoor.vercel.app/speaking.html): Lectures, masterclasses, panels, podcasts
+- [Contact](https://iamsudeepkapoor.vercel.app/contact.html): Enquiry routing for all engagement types
+
+## Facts
+- Experience: 41+ years as a professional photographer
+- Studio: Chaya Kriti, South Extension Part II, New Delhi, India (founded 1992)
+- Long-standing professional association: Bijan Films
+- Industrial work connected with: Sonalika Tractors, Monnet, Jindal ancillary industries, steel operations, mining environments
+- Editorial legacy: "The Lawyers of India" coffee-table book series (200+ legal professionals documented across two volumes)
+- Current focus: commissioned photography, editorial projects, mentorship, speaking engagements
