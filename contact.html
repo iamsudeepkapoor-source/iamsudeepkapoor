@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Contact Sudeep Kapoor — photography assignments, industrial and corporate projects, editorial and coffee-table books, portraits, mentorship and speaking invitations. Studio Chaya Kriti, New Delhi.">
+<title>Contact — Start a Conversation | Sudeep Kapoor, New Delhi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/layout.js"></script>
+</head>
+<body>
+<script>document.write(SK_NAV)</script>
+
+<main id="main">
+
+<header class="page-hero">
+  <div class="hero-media" aria-hidden="true"></div>
+  <div class="wrap">
+    <span class="eyebrow on-dark">Contact</span>
+    <h1>Every Assignment Begins <span class="serif-i" style="color:#d8b98a">With a Conversation</span></h1>
+    <p class="lede">Tell Sudeep what you have in mind. Choose an enquiry type below — the form adapts to ask only what's relevant.</p>
+  </div>
+</header>
+
+<section aria-labelledby="form-h">
+  <div class="wrap split" style="align-items:start">
+    <div>
+      <h2 id="form-h" class="animate">Enquiry Form</h2>
+      <form class="form-shell animate" data-simple-form data-success="contact-success" novalidate style="margin-top:2rem">
+        <div class="form-grid">
+          <div class="field"><label for="c-name">Full Name <span class="req">*</span></label><input id="c-name" type="text" required autocomplete="name"><span class="err">Please enter your name.</span></div>
+          <div class="field"><label for="c-email">Email <span class="req">*</span></label><input id="c-email" type="email" required autocomplete="email"><span class="err">Please enter a valid email.</span></div>
+          <div class="field"><label for="c-phone">Phone</label><input id="c-phone" type="tel" autocomplete="tel"></div>
+          <div class="field"><label for="c-org">Organisation</label><input id="c-org" type="text" autocomplete="organization"></div>
+          <div class="field full"><label for="enquiry-type">Enquiry Type <span class="req">*</span></label>
+            <select id="enquiry-type" required>
+              <option value="assignment">Photography Assignment</option>
+              <option value="industrial">Industrial Photography</option>
+              <option value="corporate">Corporate Photography</option>
+              <option value="editorial">Editorial Project</option>
+              <option value="book">Coffee-Table Book</option>
+              <option value="advertising">Advertising Assignment</option>
+              <option value="portrait">Portrait Session</option>
+              <option value="mentorship">Mentorship</option>
+              <option value="masterclass">Masterclass</option>
+              <option value="speaking">Speaking Invitation</option>
+              <option value="institutional">Institutional Collaboration</option>
+              <option value="media">Media Interview</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <!-- Dynamic groups -->
+          <div class="field" data-enquiry-group="assignment,industrial,corporate,editorial,advertising,book">
+            <label for="c-location">Project Location(s)</label><input id="c-location" type="text" placeholder="e.g. Delhi NCR, multi-city, pan-India">
+          </div>
+          <div class="field" data-enquiry-group="assignment,industrial,corporate,editorial,advertising,book,portrait">
+            <label for="c-timeline">Timeline</label>
+            <select id="c-timeline"><option value="">Select…</option><option>Urgent (within 2 weeks)</option><option>Within a month</option><option>1–3 months</option><option>Flexible / exploratory</option></select>
+          </div>
+          <div class="field" data-enquiry-group="book,editorial">
+            <label for="c-scope">Project Scope</label>
+            <select id="c-scope"><option value="">Select…</option><option>Single feature / shoot</option><option>Series over months</option><option>Full book project</option><option>Not sure yet</option></select>
+          </div>
+          <div class="field" data-enquiry-group="portrait">
+            <label for="c-sitting">Sitting Type</label>
+            <select id="c-sitting"><option value="">Select…</option><option>Individual portrait</option><option>Executive / leadership set</option><option>Family</option><option>Profession / chambers portrait</option></select>
+          </div>
+          <div class="field" data-enquiry-group="speaking,institutional,masterclass">
+            <label for="c-inst">Institution / Organisation Type</label>
+            <select id="c-inst"><option value="">Select…</option><option>Photography school</option><option>University / art school</option><option>Corporate</option><option>Photography club</option><option>Podcast / media</option><option>Other</option></select>
+          </div>
+          <div class="field" data-enquiry-group="speaking,masterclass">
+            <label for="c-format">Preferred Format</label>
+            <select id="c-format"><option value="">Select…</option><option>Guest lecture</option><option>Workshop / masterclass</option><option>Panel</option><option>Podcast / interview</option></select>
+          </div>
+          <div class="field" data-enquiry-group="mentorship">
+            <label for="c-level">Your Photography Level</label>
+            <select id="c-level"><option value="">Select…</option><option>Beginner</option><option>Intermediate</option><option>Advanced / working photographer</option></select>
+          </div>
+
+          <div class="field full"><label for="c-msg">Your Message <span class="req">*</span></label><textarea id="c-msg" required placeholder="Describe the project, engagement or question."></textarea><span class="err">Please write a short message.</span></div>
+          <div class="field full check-row">
+            <input id="c-consent" type="checkbox" required>
+            <label for="c-consent">I consent to being contacted about this enquiry. <span class="req">*</span></label>
+            <span class="err">Consent is required.</span>
+          </div>
+        </div>
+        <div class="btn-row"><button type="submit" class="btn btn-red">Send Enquiry</button></div>
+        <p class="placeholder-note">Note for developer: connect this form to your email/CRM endpoint before launch. It currently validates and confirms locally.</p>
+      </form>
+
+      <div class="form-success" id="contact-success" role="status">
+        <div class="mark">✳</div>
+        <h3>Enquiry Received</h3>
+        <p>Thank you for writing. Your enquiry will be reviewed and answered personally — not by an autoresponder.</p>
+      </div>
+    </div>
+
+    <aside class="animate d1">
+      <div class="card">
+        <h3>The Studio</h3>
+        <p><strong>Chaya Kriti</strong><br>South Extension Part II<br>New Delhi, India<br><br>Established 1992. Studio sessions by appointment; assignments undertaken across Delhi NCR and pan-India.</p>
+      </div>
+      <div class="card" style="margin-top:1.4rem">
+        <h3>If You're Enquiring About…</h3>
+        <p><strong>Mentorship</strong> — the structured application on the <a href="mentorship.html#apply" class="text-link">mentorship page</a> is the fastest route.<br><br>
+        <strong>Speaking</strong> — see topics and formats on the <a href="speaking.html" class="text-link">speaking page</a>.<br><br>
+        <strong>Services</strong> — browse the full list on the <a href="services.html" class="text-link">services page</a>.</p>
+      </div>
+      <div class="ph r-43 ph-frame" style="margin-top:1.4rem;--phx:40%;--phy:30%;--pha:150deg"><span class="ph-label"><span class="cat">Studio</span><span>Chaya Kriti · New Delhi</span></span></div>
+    </aside>
+  </div>
+</section>
+
+</main>
+<script>document.write(SK_FOOTER)</script>
+<script src="js/main.js"></script>
+</body>
+</html>
