@@ -168,7 +168,7 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
           <div class="field"><label for="pf-era">Era</label><select id="pf-era"><option value="film">Film Era</option><option value="digital">Digital Era</option></select></div>
           <div class="field"><label for="pf-ratio">Shape</label><select id="pf-ratio"><option value="r-34">Portrait 3:4</option><option value="r-43">Landscape 4:3</option><option value="r-32">Landscape 3:2</option><option value="r-11">Square</option></select></div>
           <div class="field full"><label for="pf-caption">Caption</label><input id="pf-caption" type="text"></div>
-          <div class="field full"><label for="pf-image">Image URL (optional)</label><input id="pf-image" type="url"></div>
+          <div class="field full"><label for="pf-image">Image (upload a file, or paste a URL)</label><div style="display:flex;gap:.6rem"><input id="pf-image" type="url" style="flex:1"><button type="button" class="abtn" data-upload="pf-image">Upload…</button></div></div>
           <div class="field"><label for="pf-pub">Status</label><select id="pf-pub"><option value="true">Published</option><option value="false">Hidden</option></select></div>
         </div>
         <div class="actions" style="margin-top:1rem;display:flex;gap:.6rem"><button class="abtn primary" id="pf-save">Save Item</button><button class="abtn" id="pf-clear">Clear / New</button></div>
@@ -222,7 +222,7 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
           <div class="field full"><label>Headline — wrap words in &lt;em&gt;…&lt;/em&gt; for the gold italic accent</label><input id="wl-headline" type="text"></div>
           <div class="field full"><label>Subtitle paragraph</label><textarea id="wl-sub"></textarea></div>
           <div class="field"><label>Button text</label><input id="wl-cta" type="text"></div>
-          <div class="field"><label>Background image URL (optional)</label><input id="wl-image" type="url"></div>
+          <div class="field"><label>Background image (upload or URL)</label><div style="display:flex;gap:.6rem"><input id="wl-image" type="url" style="flex:1"><button type="button" class="abtn" data-upload="wl-image">Upload…</button></div></div>
           <div class="field"><label>Shutter sound</label><select id="wl-sound"><option value="true">On</option><option value="false">Off</option></select></div>
           <div class="field"><label>Custom sound URL (optional — leave empty for built-in shutter)</label><input id="wl-sound-url" type="url"></div>
         </div>
@@ -382,6 +382,7 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
       var val = (s.data || {})[f[0]];
       val = val == null ? "" : String(val);
       if (f[2] === "textarea") return '<div class="field full"><label>' + f[1] + '</label><textarea data-k="' + f[0] + '">' + esc(val) + "</textarea></div>";
+      if (f[0].indexOf("image_url") !== -1) return '<div class="field"><label>' + f[1] + '</label><div style="display:flex;gap:.6rem"><input type="text" id="pbf-' + f[0] + '" data-k="' + f[0] + '" value="' + esc(val) + '" style="flex:1"><button type="button" class="abtn" data-upload="pbf-' + f[0] + '">Upload…</button></div></div>';
       return '<div class="field"><label>' + f[1] + '</label><input type="text" data-k="' + f[0] + '" value="' + esc(val) + '"></div>';
     }).join("");
     $("pb-json").value = JSON.stringify(s.data || {}, null, 2);
@@ -639,6 +640,36 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
   $("wl-save").addEventListener("click", function () {
     var rows = Object.keys(WL_KEYS).map(function (id) { return { key: WL_KEYS[id], value: $(id).value.trim() }; });
     sb.from("site_settings").upsert(rows).then(function (r) { r.error ? msg(r.error.message, false) : msg("Welcome settings saved", true); });
+  });
+
+  /* ===== media upload (Supabase Storage bucket: "media") ===== */
+  var upTargetId = null;
+  var upFile = document.createElement("input");
+  upFile.type = "file";
+  upFile.accept = "image/*,audio/*";
+  upFile.style.display = "none";
+  document.body.appendChild(upFile);
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest && e.target.closest("[data-upload]");
+    if (!b) return;
+    upTargetId = b.getAttribute("data-upload");
+    upFile.value = "";
+    upFile.click();
+  });
+  upFile.addEventListener("change", function () {
+    var file = upFile.files[0];
+    if (!file || !upTargetId) return;
+    if (file.size > 8 * 1024 * 1024) return msg("File is larger than 8 MB — please resize it first.", false);
+    var clean = file.name.toLowerCase().replace(/[^a-z0-9.]+/g, "-");
+    var path = new Date().toISOString().slice(0, 10) + "-" + Math.random().toString(36).slice(2, 7) + "-" + clean;
+    msg("Uploading " + file.name + "…", true);
+    sb.storage.from("media").upload(path, file, { cacheControl: "31536000", upsert: false }).then(function (r) {
+      if (r.error) return msg("Upload failed: " + r.error.message + " (has the 'media' bucket been created?)", false);
+      var pub = sb.storage.from("media").getPublicUrl(path);
+      var input = document.getElementById(upTargetId);
+      if (input) input.value = pub.data.publicUrl;
+      msg("Uploaded — image address filled in. Remember to click Save.", true);
+    });
   });
 })();
 </script>
