@@ -159,6 +159,83 @@
       if (e.key === "ArrowRight") openLb(idx + 1);
     });
   }
+
+  /* ----- Supabase submission ----- */
+  function v(id) { var el = document.getElementById(id); return el ? el.value.trim() : ""; }
+  function showSuccess(form) {
+    form.style.display = "none";
+    var success = document.getElementById(form.getAttribute("data-success"));
+    if (success) { success.classList.add("show"); success.scrollIntoView({ block: "center" }); }
+  }
+  function showError(form) {
+    var err = form.querySelector(".submit-err");
+    if (!err) {
+      err = document.createElement("p");
+      err.className = "submit-err";
+      err.style.cssText = "color:#a83a2c;font-size:.85rem;margin-top:1rem";
+      err.setAttribute("role", "alert");
+      form.appendChild(err);
+    }
+    err.textContent = "Something went wrong sending your message. Please check your connection and try again.";
+  }
+  function collectPayload(table) {
+    if (table === "enquiries") {
+      return {
+        name: v("c-name"), email: v("c-email"), phone: v("c-phone"),
+        organisation: v("c-org"), enquiry_type: v("enquiry-type"), message: v("c-msg"),
+        details: {
+          location: v("c-location"), timeline: v("c-timeline"), scope: v("c-scope"),
+          sitting: v("c-sitting"), institution: v("c-inst"), format: v("c-format"), level: v("c-level")
+        }
+      };
+    }
+    return {
+      name: v("ap-name"), email: v("ap-email"), phone: v("ap-phone"),
+      city: v("ap-city"), country: v("ap-country"), age_range: v("ap-age"),
+      level: v("ap-level"), years_experience: v("ap-years"), camera: v("ap-camera"),
+      interest: v("ap-interest"), portfolio_url: v("ap-portfolio"), program: v("ap-program"),
+      goals: v("ap-goals"), challenge: v("ap-challenge"), why_sudeep: v("ap-why")
+    };
+  }
+  function notifyEmail(table, payload) {
+    if (!window.SK_NOTIFY_EMAIL) return;
+    var flat = { _subject: (table === "enquiries" ? "New enquiry: " + (payload.enquiry_type || "") : "New mentorship application: " + (payload.program || "")) + " — " + payload.name, _template: "table" };
+    Object.keys(payload).forEach(function (k) {
+      var val = payload[k];
+      if (val && typeof val === "object") {
+        Object.keys(val).forEach(function (k2) { if (val[k2]) flat[k + "_" + k2] = val[k2]; });
+      } else if (val) { flat[k] = val; }
+    });
+    fetch("https://formsubmit.co/ajax/" + window.SK_NOTIFY_EMAIL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(flat)
+    }).catch(function () { /* email notification is best-effort; the record is already in the database */ });
+  }
+  function skSubmit(form) {
+    var table = form.getAttribute("data-supabase");
+    if (!table || !window.SK_SUPABASE) { showSuccess(form); return; }
+    var btn = form.querySelector('button[type="submit"]');
+    var orig = btn ? btn.textContent : "";
+    if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
+    fetch(window.SK_SUPABASE.url + "/rest/v1/" + table, {
+      method: "POST",
+      headers: {
+        apikey: window.SK_SUPABASE.key,
+        Authorization: "Bearer " + window.SK_SUPABASE.key,
+        "Content-Type": "application/json",
+        Prefer: "return=minimal"
+      },
+      body: JSON.stringify(collectPayload(table))
+    }).then(function (r) {
+      if (r.ok) { notifyEmail(table, collectPayload(table)); showSuccess(form); }
+      else { throw new Error("HTTP " + r.status); }
+    }).catch(function () {
+      if (btn) { btn.disabled = false; btn.textContent = orig; }
+      showError(form);
+    });
+  }
+
   function validateField(field) {
     var input = field.querySelector("input, select, textarea");
     if (!input) return true;
@@ -185,9 +262,7 @@
         if (firstInvalid) firstInvalid.focus();
         return;
       }
-      form.style.display = "none";
-      var success = document.getElementById(form.getAttribute("data-success"));
-      if (success) { success.classList.add("show"); success.scrollIntoView({ block: "center" }); }
+      skSubmit(form);
     });
   });
   var msForm = document.querySelector("form[data-multistep]");
@@ -218,9 +293,7 @@
     msForm.addEventListener("submit", function (e) {
       e.preventDefault();
       if (!stepValid(cur)) return;
-      msForm.style.display = "none";
-      var success = document.getElementById(msForm.getAttribute("data-success"));
-      if (success) { success.classList.add("show"); success.scrollIntoView({ block: "center" }); }
+      skSubmit(msForm);
     });
     showStep(0);
   }
