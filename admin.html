@@ -10,44 +10,46 @@
 <link rel="stylesheet" href="css/style.css">
 <style>
 body { background: var(--ink); color: #cfc9ba; }
-.admin-wrap { max-width: 1100px; margin: 0 auto; padding: 2rem clamp(1rem,3vw,2rem) 5rem; }
+.admin-wrap { max-width: 1150px; margin: 0 auto; padding: 2rem clamp(1rem,3vw,2rem) 5rem; }
 .admin-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; padding: 1.5rem 0 1rem; border-bottom: 1px solid #2b2823; }
 .admin-head h1 { font-size: 1.8rem; color: var(--ivory); }
 .admin-head .sub { font-size: .65rem; letter-spacing: .28em; text-transform: uppercase; color: #c96a55; }
 .tabs { display: flex; gap: .5rem; flex-wrap: wrap; margin: 1.5rem 0; }
-.tab-btn { background: none; border: 1px solid #2b2823; color: #a9a291; font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 600; padding: .55rem 1.1rem; }
+.tab-btn { background: none; border: 1px solid #2b2823; color: #a9a291; font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; padding: .55rem 1rem; }
 .tab-btn.active { background: var(--red); border-color: var(--red); color: #fff; }
 .panel { display: none; }
 .panel.active { display: block; }
-.row { background: #171512; border: 1px solid #2b2823; padding: 1.1rem 1.3rem; margin-bottom: .8rem; }
+.row { background: #171512; border: 1px solid #2b2823; padding: 1rem 1.2rem; margin-bottom: .7rem; }
+.row.hidden-row { opacity: .45; }
 .row .top { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; flex-wrap: wrap; }
-.row .t { font-family: var(--font-display); font-size: 1.15rem; color: var(--ivory); }
-.row .m { font-size: .72rem; color: #8d8676; letter-spacing: .05em; }
-.row .body { font-size: .88rem; color: #a9a291; margin-top: .6rem; white-space: pre-wrap; }
-.row .actions { display: flex; gap: .6rem; margin-top: .8rem; flex-wrap: wrap; align-items: center; }
-.abtn { background: none; border: 1px solid #3a362f; color: #cfc9ba; font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; padding: .4rem .9rem; }
+.row .t { font-family: var(--font-display); font-size: 1.1rem; color: var(--ivory); }
+.row .m { font-size: .7rem; color: #8d8676; }
+.row .body { font-size: .85rem; color: #a9a291; margin-top: .5rem; white-space: pre-wrap; }
+.row .actions { display: flex; gap: .5rem; margin-top: .7rem; flex-wrap: wrap; align-items: center; }
+.abtn { background: none; border: 1px solid #3a362f; color: #cfc9ba; font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; padding: .35rem .8rem; }
 .abtn:hover { border-color: var(--ivory); }
 .abtn.danger { color: #c96a55; border-color: #57302a; }
 .abtn.danger:hover { background: var(--red); border-color: var(--red); color: #fff; }
 .abtn.primary { background: var(--red); border-color: var(--red); color: #fff; }
-select.status { background: #11100e; color: #cfc9ba; border: 1px solid #3a362f; padding: .35rem .5rem; font-size: .75rem; }
+select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px solid #3a362f; padding: .45rem .6rem; font-size: .8rem; }
 .editor { background: #171512; border: 1px solid #3a362f; padding: 1.5rem; margin: 1rem 0 2rem; }
 .editor h3 { color: var(--ivory); margin-bottom: 1rem; font-size: 1.2rem; }
 .msg { padding: .8rem 1rem; font-size: .85rem; margin: 1rem 0; display: none; border: 1px solid; }
 .msg.ok { display: block; color: #9cb87a; border-color: #3d4a2e; }
 .msg.err { display: block; color: #c96a55; border-color: #57302a; }
-.empty { color: #8d8676; font-size: .9rem; padding: 2rem 0; }
+.empty { color: #8d8676; font-size: .9rem; padding: 1.6rem 0; }
 #login-view { max-width: 420px; margin: 12vh auto 0; }
-.count-pill { font-size: .62rem; background: #2b2823; padding: .15rem .55rem; border-radius: 9px; margin-left: .35rem; }
+.count-pill { font-size: .6rem; background: #2b2823; padding: .12rem .5rem; border-radius: 9px; margin-left: .3rem; }
+.toolbar { display: flex; gap: .7rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.2rem; }
+.hint { font-size: .72rem; color: #8d8676; margin-top: .4rem; line-height: 1.5; }
+.field label { color: #cfc9ba; }
 </style>
 </head>
 <body>
 <div class="admin-wrap">
 
   <div id="login-view">
-    <div class="admin-head" style="border:none">
-      <div><h1>Sudeep Kapoor</h1><span class="sub">Site Administration</span></div>
-    </div>
+    <div class="admin-head" style="border:none"><div><h1>Sudeep Kapoor</h1><span class="sub">Site Administration</span></div></div>
     <form id="login-form" class="editor" style="margin-top:1rem">
       <h3>Sign In</h3>
       <div class="field" style="margin-bottom:1rem"><label for="l-email">Email</label><input id="l-email" type="email" required autocomplete="username"></div>
@@ -60,69 +62,121 @@ select.status { background: #11100e; color: #cfc9ba; border: 1px solid #3a362f; 
   <div id="app-view" style="display:none">
     <div class="admin-head">
       <div><h1>Site Administration</h1><span class="sub">Sudeep Kapoor — 41+ Years Behind the Lens</span></div>
-      <div style="display:flex;gap:.8rem;align-items:center">
-        <a class="abtn" href="index.html" target="_blank" rel="noopener">View Site</a>
-        <button class="abtn danger" id="logout-btn">Sign Out</button>
-      </div>
+      <div style="display:flex;gap:.8rem"><a class="abtn" href="index.html" target="_blank" rel="noopener">View Site</a><button class="abtn danger" id="logout-btn">Sign Out</button></div>
     </div>
 
-    <div class="tabs" id="tabs">
-      <button class="tab-btn active" data-tab="enquiries">Enquiries<span class="count-pill" id="cnt-enquiries">–</span></button>
-      <button class="tab-btn" data-tab="applications">Applications<span class="count-pill" id="cnt-applications">–</span></button>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="subs">Submissions<span class="count-pill" id="cnt-subs">–</span></button>
+      <button class="tab-btn" data-tab="pages">Page Builder</button>
+      <button class="tab-btn" data-tab="forms">Form Builder</button>
       <button class="tab-btn" data-tab="journal">Journal</button>
       <button class="tab-btn" data-tab="portfolio">Portfolio</button>
       <button class="tab-btn" data-tab="testimonials">Testimonials</button>
-      <button class="tab-btn" data-tab="settings">Site Text</button>
+      <button class="tab-btn" data-tab="nav">Menus</button>
+      <button class="tab-btn" data-tab="welcome">Welcome Page</button>
     </div>
     <div class="msg" id="app-msg"></div>
 
-    <div class="panel active" id="panel-enquiries"><div class="empty">Loading…</div></div>
-    <div class="panel" id="panel-applications"><div class="empty">Loading…</div></div>
+    <!-- Submissions -->
+    <div class="panel active" id="panel-subs">
+      <div class="toolbar"><label>Show:</label><select id="sub-filter"><option value="">All forms</option><option value="contact">Contact enquiries</option><option value="mentorship">Mentorship applications</option></select></div>
+      <div id="sub-list"><div class="empty">Loading…</div></div>
+    </div>
 
+    <!-- Page builder -->
+    <div class="panel" id="panel-pages">
+      <div class="toolbar">
+        <label>Page:</label>
+        <select id="pb-page">
+          <option value="index">Home</option><option value="about">About</option><option value="journey">Journey</option>
+          <option value="portfolio">Portfolio</option><option value="services">Services</option><option value="mentorship">Mentorship</option>
+          <option value="journal">Journal</option><option value="speaking">Speaking</option><option value="contact">Contact</option>
+        </select>
+        <button class="abtn" id="pb-add">+ Add Section</button>
+        <button class="abtn" id="pb-import">Import Default Sections</button>
+      </div>
+      <p class="hint">Sections render on the live page top-to-bottom. Use ↑ ↓ to reorder, the eye to hide/show, Edit to change text and images. If a page has no sections here, the live site shows its original built-in design.</p>
+      <div class="editor" id="pb-editor" style="display:none">
+        <h3 id="pb-ed-title">Edit Section</h3>
+        <div class="form-grid" id="pb-fields"></div>
+        <div class="field" style="margin-top:1rem"><label>Advanced (raw JSON — for fine control)</label><textarea id="pb-json" style="min-height:120px;font-family:monospace;font-size:.78rem"></textarea></div>
+        <div class="actions" style="margin-top:1rem;display:flex;gap:.6rem">
+          <button class="abtn primary" id="pb-save">Save Section</button>
+          <button class="abtn" id="pb-cancel">Cancel</button>
+        </div>
+      </div>
+      <div id="pb-list"><div class="empty">Loading…</div></div>
+    </div>
+
+    <!-- Form builder -->
+    <div class="panel" id="panel-forms">
+      <div class="toolbar">
+        <label>Form:</label>
+        <select id="fb-form"><option value="contact">Contact / Enquiry form</option><option value="mentorship">Mentorship application</option></select>
+        <button class="abtn" id="fb-add">+ Add Field</button>
+        <button class="abtn" id="fb-import">Import Default Fields</button>
+      </div>
+      <p class="hint">Reorder with ↑ ↓. "Show only when" makes a field appear based on another field's answer (e.g. only for certain enquiry types). If a form has no fields here, the live site uses the original built-in form.</p>
+      <div class="editor" id="fb-editor" style="display:none">
+        <h3 id="fb-ed-title">Edit Field</h3>
+        <div class="form-grid">
+          <div class="field"><label>Label</label><input id="fb-label" type="text"></div>
+          <div class="field"><label>Field key (short, no spaces — used in the database)</label><input id="fb-key" type="text" placeholder="e.g. company_size"></div>
+          <div class="field"><label>Type</label><select id="fb-type"><option>text</option><option>email</option><option>tel</option><option>url</option><option>textarea</option><option>select</option><option>checkbox</option></select></div>
+          <div class="field"><label>Required</label><select id="fb-req"><option value="false">Optional</option><option value="true">Required</option></select></div>
+          <div class="field"><label>Placeholder</label><input id="fb-ph" type="text"></div>
+          <div class="field"><label>Width</label><select id="fb-width"><option value="">Half</option><option value="full">Full</option></select></div>
+          <div class="field"><label>Step (mentorship form: 1–3; contact: always 1)</label><input id="fb-step" type="number" min="1" max="3" value="1"></div>
+          <div class="field full"><label>Dropdown options (one per line — only for type "select")</label><textarea id="fb-options"></textarea></div>
+          <div class="field"><label>Show only when field…</label><input id="fb-si-field" type="text" placeholder="e.g. enquiry_type"></div>
+          <div class="field"><label>…has one of these values (comma-separated)</label><input id="fb-si-values" type="text" placeholder="e.g. Portrait Session, Mentorship"></div>
+        </div>
+        <div class="actions" style="margin-top:1rem;display:flex;gap:.6rem">
+          <button class="abtn primary" id="fb-save">Save Field</button>
+          <button class="abtn" id="fb-cancel">Cancel</button>
+        </div>
+      </div>
+      <div id="fb-list"><div class="empty">Loading…</div></div>
+    </div>
+
+    <!-- Journal -->
     <div class="panel" id="panel-journal">
       <div class="editor">
         <h3 id="jp-form-title">New Journal Post</h3>
         <input type="hidden" id="jp-id">
         <div class="form-grid">
           <div class="field"><label for="jp-title">Title</label><input id="jp-title" type="text"></div>
-          <div class="field"><label for="jp-category">Category</label>
-            <select id="jp-category"><option>Darkroom Stories</option><option>Studio Lighting</option><option>Portraiture</option><option>Career Lessons</option><option>Field Notes</option></select></div>
-          <div class="field"><label for="jp-rt">Read Time (e.g. 5 min read)</label><input id="jp-rt" type="text" value="5 min read"></div>
+          <div class="field"><label for="jp-category">Category</label><select id="jp-category"><option>Darkroom Stories</option><option>Studio Lighting</option><option>Portraiture</option><option>Career Lessons</option><option>Field Notes</option></select></div>
+          <div class="field"><label for="jp-rt">Read Time</label><input id="jp-rt" type="text" value="5 min read"></div>
           <div class="field"><label for="jp-pub">Status</label><select id="jp-pub"><option value="true">Published</option><option value="false">Draft</option></select></div>
-          <div class="field full"><label for="jp-excerpt">Excerpt (one sentence)</label><input id="jp-excerpt" type="text"></div>
+          <div class="field full"><label for="jp-excerpt">Excerpt</label><input id="jp-excerpt" type="text"></div>
           <div class="field full"><label for="jp-body">Body (blank line = new paragraph)</label><textarea id="jp-body" style="min-height:220px"></textarea></div>
         </div>
-        <div class="actions" style="margin-top:1rem;display:flex;gap:.6rem">
-          <button class="abtn primary" id="jp-save">Save Post</button>
-          <button class="abtn" id="jp-clear">Clear / New</button>
-        </div>
+        <div class="actions" style="margin-top:1rem;display:flex;gap:.6rem"><button class="abtn primary" id="jp-save">Save Post</button><button class="abtn" id="jp-clear">Clear / New</button></div>
       </div>
       <div id="jp-list"><div class="empty">Loading…</div></div>
     </div>
 
+    <!-- Portfolio -->
     <div class="panel" id="panel-portfolio">
       <div class="editor">
         <h3 id="pf-form-title">New Portfolio Item</h3>
         <input type="hidden" id="pf-id">
         <div class="form-grid">
           <div class="field"><label for="pf-title">Title</label><input id="pf-title" type="text"></div>
-          <div class="field"><label for="pf-category">Category</label>
-            <select id="pf-category"><option value="portrait">Portraits</option><option value="industrial">Industrial</option><option value="editorial">Editorial</option><option value="studio">Studio</option><option value="advertising">Advertising</option><option value="legacy">Legacy Archive</option></select></div>
+          <div class="field"><label for="pf-category">Category</label><select id="pf-category"><option value="portrait">Portraits</option><option value="industrial">Industrial</option><option value="editorial">Editorial</option><option value="studio">Studio</option><option value="advertising">Advertising</option><option value="legacy">Legacy Archive</option></select></div>
           <div class="field"><label for="pf-era">Era</label><select id="pf-era"><option value="film">Film Era</option><option value="digital">Digital Era</option></select></div>
           <div class="field"><label for="pf-ratio">Shape</label><select id="pf-ratio"><option value="r-34">Portrait 3:4</option><option value="r-43">Landscape 4:3</option><option value="r-32">Landscape 3:2</option><option value="r-11">Square</option></select></div>
-          <div class="field full"><label for="pf-caption">Caption (shown under title, e.g. "Studio · Chaya Kriti")</label><input id="pf-caption" type="text"></div>
-          <div class="field full"><label for="pf-image">Image URL (optional — paste a Supabase Storage or any image link; leave empty for placeholder frame)</label><input id="pf-image" type="url"></div>
+          <div class="field full"><label for="pf-caption">Caption</label><input id="pf-caption" type="text"></div>
+          <div class="field full"><label for="pf-image">Image URL (optional)</label><input id="pf-image" type="url"></div>
           <div class="field"><label for="pf-pub">Status</label><select id="pf-pub"><option value="true">Published</option><option value="false">Hidden</option></select></div>
         </div>
-        <div class="actions" style="margin-top:1rem;display:flex;gap:.6rem">
-          <button class="abtn primary" id="pf-save">Save Item</button>
-          <button class="abtn" id="pf-clear">Clear / New</button>
-        </div>
-        <p style="font-size:.75rem;color:#8d8676;margin-top:1rem">Note: as soon as at least one published item exists here, the live portfolio page shows YOUR items instead of the built-in placeholders.</p>
+        <div class="actions" style="margin-top:1rem;display:flex;gap:.6rem"><button class="abtn primary" id="pf-save">Save Item</button><button class="abtn" id="pf-clear">Clear / New</button></div>
       </div>
       <div id="pf-list"><div class="empty">Loading…</div></div>
     </div>
 
+    <!-- Testimonials -->
     <div class="panel" id="panel-testimonials">
       <div class="editor">
         <h3 id="ts-form-title">New Testimonial</h3>
@@ -133,25 +187,47 @@ select.status { background: #11100e; color: #cfc9ba; border: 1px solid #3a362f; 
           <div class="field full"><label for="ts-quote">Quote</label><textarea id="ts-quote"></textarea></div>
           <div class="field"><label for="ts-pub">Status</label><select id="ts-pub"><option value="true">Published</option><option value="false">Hidden</option></select></div>
         </div>
-        <div class="actions" style="margin-top:1rem;display:flex;gap:.6rem">
-          <button class="abtn primary" id="ts-save">Save Testimonial</button>
-          <button class="abtn" id="ts-clear">Clear / New</button>
-        </div>
-        <p style="font-size:.75rem;color:#8d8676;margin-top:1rem">Published testimonials appear automatically on the home page. Only add real testimonials with permission.</p>
+        <div class="actions" style="margin-top:1rem;display:flex;gap:.6rem"><button class="abtn primary" id="ts-save">Save Testimonial</button><button class="abtn" id="ts-clear">Clear / New</button></div>
+        <p class="hint">Only add real testimonials with permission. They appear on the home page automatically.</p>
       </div>
       <div id="ts-list"><div class="empty">Loading…</div></div>
     </div>
 
-    <div class="panel" id="panel-settings">
+    <!-- Menus / flyouts -->
+    <div class="panel" id="panel-nav">
+      <p class="hint" style="margin-bottom:1rem">These control the hover menus in the header (About, Portfolio, Services, Mentorship). Links: one per line as <b>Label | web address</b>.</p>
       <div class="editor">
-        <h3>Home Page Text</h3>
+        <h3 id="nv-form-title">Edit Menu Flyout</h3>
+        <input type="hidden" id="nv-id">
         <div class="form-grid">
-          <div class="field full"><label for="st-hero-headline">Hero Headline (leave empty for default: "41+ Years Behind the Lens")</label><input id="st-hero-headline" type="text"></div>
-          <div class="field full"><label for="st-hero-lede">Hero Introduction Paragraph (leave empty for default)</label><textarea id="st-hero-lede"></textarea></div>
+          <div class="field"><label>Menu item</label><select id="nv-key"><option value="about">About</option><option value="portfolio">Portfolio</option><option value="services">Services</option><option value="mentorship">Mentorship</option></select></div>
+          <div class="field"><label>Small label (eyebrow)</label><input id="nv-eyebrow" type="text"></div>
+          <div class="field full"><label>Short description</label><input id="nv-desc" type="text"></div>
+          <div class="field full"><label>Links (Label | address — one per line)</label><textarea id="nv-links" placeholder="The Story | about.html&#10;Career Timeline | journey.html"></textarea></div>
+          <div class="field"><label>Visible</label><select id="nv-vis"><option value="true">Yes</option><option value="false">No</option></select></div>
         </div>
-        <div class="actions" style="margin-top:1rem">
-          <button class="abtn primary" id="st-save">Save Site Text</button>
+        <div class="actions" style="margin-top:1rem;display:flex;gap:.6rem"><button class="abtn primary" id="nv-save">Save Flyout</button><button class="abtn" id="nv-clear">Clear / New</button></div>
+      </div>
+      <div id="nv-list"><div class="empty">Loading…</div></div>
+    </div>
+
+    <!-- Welcome -->
+    <div class="panel" id="panel-welcome">
+      <div class="editor">
+        <h3>Welcome Page &amp; Shutter Transition</h3>
+        <div class="form-grid">
+          <div class="field"><label>Welcome page</label><select id="wl-enabled"><option value="true">Enabled</option><option value="false">Disabled</option></select></div>
+          <div class="field"><label>Show it…</label><select id="wl-frequency"><option value="session">Once per visit (recommended)</option><option value="once">Only first-ever visit</option><option value="always">Every page load</option></select></div>
+          <div class="field full"><label>Small top line (eyebrow)</label><input id="wl-eyebrow" type="text"></div>
+          <div class="field full"><label>Headline — wrap words in &lt;em&gt;…&lt;/em&gt; for the gold italic accent</label><input id="wl-headline" type="text"></div>
+          <div class="field full"><label>Subtitle paragraph</label><textarea id="wl-sub"></textarea></div>
+          <div class="field"><label>Button text</label><input id="wl-cta" type="text"></div>
+          <div class="field"><label>Background image URL (optional)</label><input id="wl-image" type="url"></div>
+          <div class="field"><label>Shutter sound</label><select id="wl-sound"><option value="true">On</option><option value="false">Off</option></select></div>
+          <div class="field"><label>Custom sound URL (optional — leave empty for built-in shutter)</label><input id="wl-sound-url" type="url"></div>
         </div>
+        <div class="actions" style="margin-top:1rem"><button class="abtn primary" id="wl-save">Save Welcome Settings</button></div>
+        <p class="hint">The camera-shutter close animation and sound play when a visitor clicks the button. Test it in a private/incognito window — after seeing it once, your normal browser hides it for the rest of the visit.</p>
       </div>
     </div>
   </div>
@@ -159,108 +235,285 @@ select.status { background: #11100e; color: #cfc9ba; border: 1px solid #3a362f; 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="js/config.js"></script>
+<script src="js/seed-content.js"></script>
 <script>
 (function () {
   "use strict";
   var sb = window.supabase.createClient(window.SK_SUPABASE.url, window.SK_SUPABASE.key);
   var $ = function (id) { return document.getElementById(id); };
   function esc(s) { var d = document.createElement("div"); d.textContent = s == null ? "" : String(s); return d.innerHTML; }
-  function msg(text, ok) {
-    var el = $("app-msg"); el.className = "msg " + (ok ? "ok" : "err"); el.textContent = text;
-    setTimeout(function () { el.className = "msg"; }, 4000);
-  }
+  function msg(text, ok) { var el = $("app-msg"); el.className = "msg " + (ok ? "ok" : "err"); el.textContent = text; setTimeout(function () { el.className = "msg"; }, 4500); }
 
-  /* ---------- auth ---------- */
-  function showApp(session) {
-    $("login-view").style.display = session ? "none" : "";
-    $("app-view").style.display = session ? "" : "none";
-    if (session) loadAll();
-  }
+  /* ===== auth ===== */
+  function showApp(s) { $("login-view").style.display = s ? "none" : ""; $("app-view").style.display = s ? "" : "none"; if (s) loadAll(); }
   sb.auth.getSession().then(function (r) { showApp(r.data.session); });
   $("login-form").addEventListener("submit", function (e) {
     e.preventDefault();
     sb.auth.signInWithPassword({ email: $("l-email").value.trim(), password: $("l-pass").value }).then(function (r) {
-      if (r.error) { var m = $("login-msg"); m.className = "msg err"; m.textContent = r.error.message; }
-      else showApp(r.data.session);
+      if (r.error) { var m = $("login-msg"); m.className = "msg err"; m.textContent = r.error.message; } else showApp(r.data.session);
     });
   });
   $("logout-btn").addEventListener("click", function () { sb.auth.signOut().then(function () { showApp(null); }); });
-
-  /* ---------- tabs ---------- */
   document.querySelectorAll(".tab-btn").forEach(function (b) {
     b.addEventListener("click", function () {
       document.querySelectorAll(".tab-btn").forEach(function (x) { x.classList.remove("active"); });
       document.querySelectorAll(".panel").forEach(function (x) { x.classList.remove("active"); });
-      b.classList.add("active");
-      $("panel-" + b.getAttribute("data-tab")).classList.add("active");
+      b.classList.add("active"); $("panel-" + b.getAttribute("data-tab")).classList.add("active");
     });
   });
+  function loadAll() { loadSubs(); pbLoad(); fbLoad(); jpObj.load(); pfObj.load(); tsObj.load(); nvLoad(); wlLoad(); }
 
-  function loadAll() { loadEnquiries(); loadApplications(); loadJournal(); loadPortfolio(); loadTestimonials(); loadSettings(); }
-
-  /* ---------- enquiries ---------- */
-  function loadEnquiries() {
-    sb.from("enquiries").select("*").order("created_at", { ascending: false }).then(function (r) {
-      if (r.error) return msg("Enquiries: " + r.error.message, false);
-      $("cnt-enquiries").textContent = r.data.length;
-      var p = $("panel-enquiries");
-      if (!r.data.length) { p.innerHTML = '<div class="empty">No enquiries yet.</div>'; return; }
-      p.innerHTML = r.data.map(function (e) {
-        var det = "";
-        if (e.details) Object.keys(e.details).forEach(function (k) { if (e.details[k]) det += k + ": " + e.details[k] + "\n"; });
-        return '<div class="row"><div class="top"><span class="t">' + esc(e.name) + ' — ' + esc(e.enquiry_type) + '</span><span class="m">' + new Date(e.created_at).toLocaleString() + '</span></div>' +
-          '<div class="m">' + esc(e.email) + (e.phone ? " · " + esc(e.phone) : "") + (e.organisation ? " · " + esc(e.organisation) : "") + '</div>' +
-          '<div class="body">' + esc(e.message) + (det ? "\n\n" + esc(det) : "") + '</div>' +
-          '<div class="actions"><a class="abtn" href="mailto:' + esc(e.email) + '">Reply by Email</a>' +
-          '<button class="abtn danger" data-del-enquiry="' + e.id + '">Delete</button></div></div>';
+  /* ===== submissions ===== */
+  var SUB_STATUSES = ["new", "reviewing", "shortlisted", "contacted", "accepted", "waitlisted", "rejected", "done", "archived"];
+  function loadSubs() {
+    var f = $("sub-filter").value;
+    var q = "form_submissions";
+    var sel = sb.from(q).select("*").order("created_at", { ascending: false });
+    if (f) sel = sel.eq("form", f);
+    sel.then(function (r) {
+      if (r.error) return msg("Submissions: " + r.error.message, false);
+      $("cnt-subs").textContent = r.data.length;
+      var p = $("sub-list");
+      if (!r.data.length) { p.innerHTML = '<div class="empty">No submissions yet.</div>'; return; }
+      p.innerHTML = r.data.map(function (s) {
+        var d = s.data || {};
+        var pairs = Object.keys(d).map(function (k) { return k + ": " + d[k]; }).join("\n");
+        var opts = SUB_STATUSES.map(function (x) { return "<option" + (s.status === x ? " selected" : "") + ">" + x + "</option>"; }).join("");
+        return '<div class="row"><div class="top"><span class="t">' + esc(d.name || "Anonymous") + ' — ' + esc(s.form) + '</span><span class="m">' + new Date(s.created_at).toLocaleString() + "</span></div>" +
+          '<div class="body">' + esc(pairs) + "</div>" +
+          '<div class="actions">Status: <select class="mini" data-st="' + s.id + '">' + opts + "</select>" +
+          (d.email ? '<a class="abtn" href="mailto:' + esc(d.email) + '">Reply by Email</a>' : "") +
+          '<button class="abtn danger" data-del="' + s.id + '">Delete</button></div></div>';
       }).join("");
-      p.querySelectorAll("[data-del-enquiry]").forEach(function (b) {
+      p.querySelectorAll("[data-st]").forEach(function (s2) {
+        s2.addEventListener("change", function () {
+          sb.from("form_submissions").update({ status: s2.value }).eq("id", s2.getAttribute("data-st")).then(function (r2) { r2.error ? msg(r2.error.message, false) : msg("Status updated", true); });
+        });
+      });
+      p.querySelectorAll("[data-del]").forEach(function (b) {
         b.addEventListener("click", function () {
-          if (!confirm("Delete this enquiry permanently?")) return;
-          sb.from("enquiries").delete().eq("id", b.getAttribute("data-del-enquiry")).then(function (r) {
-            r.error ? msg(r.error.message, false) : loadEnquiries();
-          });
+          if (!confirm("Delete this submission permanently?")) return;
+          sb.from("form_submissions").delete().eq("id", b.getAttribute("data-del")).then(function (r2) { r2.error ? msg(r2.error.message, false) : loadSubs(); });
         });
       });
     });
   }
+  $("sub-filter").addEventListener("change", loadSubs);
 
-  /* ---------- applications ---------- */
-  var STATUSES = ["new","reviewing","shortlisted","contacted","accepted","waitlisted","rejected","archived"];
-  function loadApplications() {
-    sb.from("mentorship_applications").select("*").order("created_at", { ascending: false }).then(function (r) {
-      if (r.error) return msg("Applications: " + r.error.message, false);
-      $("cnt-applications").textContent = r.data.length;
-      var p = $("panel-applications");
-      if (!r.data.length) { p.innerHTML = '<div class="empty">No applications yet.</div>'; return; }
-      p.innerHTML = r.data.map(function (a) {
-        var opts = STATUSES.map(function (s) { return '<option' + (a.status === s ? " selected" : "") + '>' + s + '</option>'; }).join("");
-        return '<div class="row"><div class="top"><span class="t">' + esc(a.name) + ' — ' + esc(a.program || "no program") + '</span><span class="m">' + new Date(a.created_at).toLocaleString() + '</span></div>' +
-          '<div class="m">' + esc(a.email) + (a.phone ? " · " + esc(a.phone) : "") + (a.city ? " · " + esc(a.city) : "") + ' · level: ' + esc(a.level || "-") + ' · interest: ' + esc(a.interest || "-") + (a.portfolio_url ? ' · <a href="' + esc(a.portfolio_url) + '" target="_blank" rel="noopener" style="color:#c96a55">portfolio</a>' : "") + '</div>' +
-          '<div class="body">Goals: ' + esc(a.goals || "-") + (a.challenge ? "\n\nChallenge: " + esc(a.challenge) : "") + (a.why_sudeep ? "\n\nWhy Sudeep: " + esc(a.why_sudeep) : "") + '</div>' +
-          '<div class="actions">Status: <select class="status" data-app-status="' + a.id + '">' + opts + '</select>' +
-          '<a class="abtn" href="mailto:' + esc(a.email) + '">Reply by Email</a>' +
-          '<button class="abtn danger" data-del-app="' + a.id + '">Delete</button></div></div>';
+  /* ===== page builder ===== */
+  var KIND_LABEL = { hero: "Home Hero (cinematic)", page_hero: "Page Hero", stats: "Statistics Strip", era_strip: "Journey Strip", split: "Image + Text Story", cards: "Card Grid", quote: "Pull Quote", numlist: "Numbered List", faq: "FAQ Accordion", timeline: "Timeline", cta: "Call to Action Band", richtext: "Text Section", system: "Dynamic Component" };
+  var KIND_FIELDS = {
+    hero: [["eyebrow", "Small top line"], ["heading", "Headline (<em> allowed)"], ["lede", "Intro paragraph", "textarea"]],
+    page_hero: [["eyebrow", "Small top line"], ["heading", "Headline (<em> allowed)"], ["lede", "Intro paragraph", "textarea"]],
+    stats: [],
+    era_strip: [["eyebrow", "Small top line"], ["heading", "Headline (<em> allowed)"], ["link_label", "Bottom link text"], ["link_href", "Bottom link address"]],
+    split: [["eyebrow", "Small top line"], ["heading", "Headline (<em> allowed)"], ["bg", "Background (empty, dark, darker, paper)"], ["image_side", "Image side (left / right)"], ["image_cat", "Image label"], ["image_caption", "Image caption"], ["image_url", "Image URL (optional)"]],
+    cards: [["eyebrow", "Small top line"], ["heading", "Headline (<em> allowed)"], ["lede", "Intro paragraph", "textarea"], ["bg", "Background (empty, dark, paper)"], ["columns", "Columns (2 or 3)"]],
+    quote: [["text", "Quote text", "textarea"], ["cite", "Attribution"], ["bg", "Background (empty, dark, paper)"]],
+    numlist: [["eyebrow", "Small top line"], ["heading", "Headline"], ["bg", "Background (empty, dark, paper)"]],
+    faq: [["eyebrow", "Small top line"], ["heading", "Headline"]],
+    timeline: [["eyebrow", "Small top line"], ["heading", "Headline"], ["bg", "Background (empty, dark)"]],
+    cta: [["eyebrow", "Small top line"], ["heading", "Headline (<em> allowed)"], ["lede", "Supporting paragraph", "textarea"]],
+    richtext: [["eyebrow", "Small top line"], ["heading", "Headline"], ["bg", "Background (empty, dark, paper)"]],
+    system: [["component", "Component (portfolio_grid, journal_list, testimonials, contact_form, mentorship_form)"], ["eyebrow", "Small top line"], ["heading", "Headline"], ["lede", "Intro paragraph", "textarea"]]
+  };
+  var pbRows = [], pbEditing = null;
+  function pbLoad() {
+    var pg = $("pb-page").value;
+    sb.from("page_sections").select("*").eq("page", pg).order("sort").then(function (r) {
+      if (r.error) return msg("Pages: " + r.error.message, false);
+      pbRows = r.data;
+      var el = $("pb-list");
+      if (!r.data.length) { el.innerHTML = '<div class="empty">No sections yet for this page — the live site shows the original built-in design. Click "Import Default Sections" to load it here for editing.</div>'; return; }
+      el.innerHTML = r.data.map(function (s, i) {
+        var d = s.data || {};
+        var snippet = d.heading || d.text || (d.component ? "Component: " + d.component : "") || "";
+        return '<div class="row' + (s.visible ? "" : " hidden-row") + '"><div class="top"><span class="t">' + (i + 1) + ". " + esc(KIND_LABEL[s.kind] || s.kind) + '</span><span class="m">' + esc(String(snippet).replace(/<[^>]*>/g, "").slice(0, 70)) + "</span></div>" +
+          '<div class="actions">' +
+          '<button class="abtn" data-mv="-1" data-id="' + s.id + '">↑</button>' +
+          '<button class="abtn" data-mv="1" data-id="' + s.id + '">↓</button>' +
+          '<button class="abtn" data-vis="' + s.id + '">' + (s.visible ? "Hide" : "Show") + "</button>" +
+          '<button class="abtn" data-ed="' + s.id + '">Edit</button>' +
+          '<button class="abtn" data-dup="' + s.id + '">Duplicate</button>' +
+          '<button class="abtn danger" data-del="' + s.id + '">Delete</button></div></div>';
       }).join("");
-      p.querySelectorAll("[data-app-status]").forEach(function (s) {
-        s.addEventListener("change", function () {
-          sb.from("mentorship_applications").update({ status: s.value }).eq("id", s.getAttribute("data-app-status")).then(function (r) {
-            r.error ? msg(r.error.message, false) : msg("Status updated", true);
-          });
+      el.querySelectorAll("[data-mv]").forEach(function (b) {
+        b.addEventListener("click", function () {
+          var id = b.getAttribute("data-id"), dir = parseInt(b.getAttribute("data-mv"), 10);
+          var i = pbRows.findIndex(function (x) { return x.id === id; });
+          var j = i + dir;
+          if (j < 0 || j >= pbRows.length) return;
+          var a = pbRows[i], c = pbRows[j];
+          Promise.all([
+            sb.from("page_sections").update({ sort: c.sort }).eq("id", a.id),
+            sb.from("page_sections").update({ sort: a.sort }).eq("id", c.id)
+          ]).then(pbLoad);
         });
       });
-      p.querySelectorAll("[data-del-app]").forEach(function (b) {
+      el.querySelectorAll("[data-vis]").forEach(function (b) {
         b.addEventListener("click", function () {
-          if (!confirm("Delete this application permanently?")) return;
-          sb.from("mentorship_applications").delete().eq("id", b.getAttribute("data-del-app")).then(function (r) {
-            r.error ? msg(r.error.message, false) : loadApplications();
-          });
+          var s = pbRows.find(function (x) { return x.id === b.getAttribute("data-vis"); });
+          sb.from("page_sections").update({ visible: !s.visible }).eq("id", s.id).then(pbLoad);
+        });
+      });
+      el.querySelectorAll("[data-ed]").forEach(function (b) {
+        b.addEventListener("click", function () { pbEdit(pbRows.find(function (x) { return x.id === b.getAttribute("data-ed"); })); });
+      });
+      el.querySelectorAll("[data-dup]").forEach(function (b) {
+        b.addEventListener("click", function () {
+          var s = pbRows.find(function (x) { return x.id === b.getAttribute("data-dup"); });
+          sb.from("page_sections").insert({ page: s.page, kind: s.kind, data: s.data, sort: s.sort + 1, visible: s.visible }).then(pbLoad);
+        });
+      });
+      el.querySelectorAll("[data-del]").forEach(function (b) {
+        b.addEventListener("click", function () {
+          if (!confirm("Delete this section permanently?")) return;
+          sb.from("page_sections").delete().eq("id", b.getAttribute("data-del")).then(pbLoad);
         });
       });
     });
   }
+  function pbEdit(s) {
+    pbEditing = s;
+    $("pb-editor").style.display = "";
+    $("pb-ed-title").textContent = (s.id ? "Edit: " : "New: ") + (KIND_LABEL[s.kind] || s.kind);
+    var fields = KIND_FIELDS[s.kind] || [];
+    $("pb-fields").innerHTML = fields.map(function (f) {
+      var val = (s.data || {})[f[0]];
+      val = val == null ? "" : String(val);
+      if (f[2] === "textarea") return '<div class="field full"><label>' + f[1] + '</label><textarea data-k="' + f[0] + '">' + esc(val) + "</textarea></div>";
+      return '<div class="field"><label>' + f[1] + '</label><input type="text" data-k="' + f[0] + '" value="' + esc(val) + '"></div>';
+    }).join("");
+    $("pb-json").value = JSON.stringify(s.data || {}, null, 2);
+    $("pb-editor").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  $("pb-save").addEventListener("click", function () {
+    var data;
+    try { data = JSON.parse($("pb-json").value || "{}"); } catch (e) { return msg("The Advanced JSON box contains a mistake: " + e.message, false); }
+    $("pb-fields").querySelectorAll("[data-k]").forEach(function (inp) {
+      var v = inp.value.trim();
+      var k = inp.getAttribute("data-k");
+      if (v === "") delete data[k]; else data[k] = k === "columns" ? (parseInt(v, 10) || 3) : v;
+    });
+    var s = pbEditing;
+    var op = s.id ? sb.from("page_sections").update({ data: data, kind: s.kind }).eq("id", s.id)
+                  : sb.from("page_sections").insert({ page: $("pb-page").value, kind: s.kind, data: data, sort: (pbRows.length ? Math.max.apply(null, pbRows.map(function (x) { return x.sort; })) + 10 : 10), visible: true });
+    op.then(function (r) {
+      if (r.error) return msg(r.error.message, false);
+      msg("Section saved", true); $("pb-editor").style.display = "none"; pbLoad();
+    });
+  });
+  $("pb-cancel").addEventListener("click", function () { $("pb-editor").style.display = "none"; });
+  $("pb-add").addEventListener("click", function () {
+    var kinds = Object.keys(KIND_LABEL);
+    var pick = prompt("Section type — type one of:\n\n" + kinds.map(function (k) { return k + "  (" + KIND_LABEL[k] + ")"; }).join("\n"), "richtext");
+    if (!pick || !KIND_LABEL[pick]) return;
+    pbEdit({ kind: pick, data: {} });
+  });
+  $("pb-import").addEventListener("click", function () {
+    var pg = $("pb-page").value;
+    var seed = (window.SK_SEED || {})[pg];
+    if (!seed) return msg("No defaults available for this page.", false);
+    if (pbRows.length && !confirm("This page already has sections. Import defaults anyway (added after existing ones)?")) return;
+    var base = pbRows.length ? Math.max.apply(null, pbRows.map(function (x) { return x.sort; })) : 0;
+    var rows = seed.map(function (s, i) { return { page: pg, kind: s.kind, data: s.data, sort: base + (i + 1) * 10, visible: true }; });
+    sb.from("page_sections").insert(rows).then(function (r) { r.error ? msg(r.error.message, false) : (msg("Default sections imported — the live page is now editable here.", true), pbLoad()); });
+  });
+  $("pb-page").addEventListener("change", pbLoad);
 
-  /* ---------- generic CRUD helper ---------- */
+  /* ===== form builder ===== */
+  var fbRows = [], fbEditing = null;
+  function fbLoad() {
+    var fm = $("fb-form").value;
+    sb.from("form_fields").select("*").eq("form", fm).order("sort").then(function (r) {
+      if (r.error) return msg("Forms: " + r.error.message, false);
+      fbRows = r.data;
+      var el = $("fb-list");
+      if (!r.data.length) { el.innerHTML = '<div class="empty">No fields yet — the live site uses the original built-in form. Click "Import Default Fields" to load it here for editing.</div>'; return; }
+      el.innerHTML = r.data.map(function (f, i) {
+        return '<div class="row' + (f.visible ? "" : " hidden-row") + '"><div class="top"><span class="t">' + (i + 1) + ". " + esc(f.label) + '</span><span class="m">' + esc(f.type) + (f.required ? " · required" : "") + " · step " + (f.step || 1) + "</span></div>" +
+          '<div class="actions">' +
+          '<button class="abtn" data-mv="-1" data-id="' + f.id + '">↑</button>' +
+          '<button class="abtn" data-mv="1" data-id="' + f.id + '">↓</button>' +
+          '<button class="abtn" data-vis="' + f.id + '">' + (f.visible ? "Hide" : "Show") + "</button>" +
+          '<button class="abtn" data-ed="' + f.id + '">Edit</button>' +
+          '<button class="abtn danger" data-del="' + f.id + '">Delete</button></div></div>';
+      }).join("");
+      el.querySelectorAll("[data-mv]").forEach(function (b) {
+        b.addEventListener("click", function () {
+          var id = b.getAttribute("data-id"), dir = parseInt(b.getAttribute("data-mv"), 10);
+          var i = fbRows.findIndex(function (x) { return x.id === id; }), j = i + dir;
+          if (j < 0 || j >= fbRows.length) return;
+          Promise.all([
+            sb.from("form_fields").update({ sort: fbRows[j].sort }).eq("id", fbRows[i].id),
+            sb.from("form_fields").update({ sort: fbRows[i].sort }).eq("id", fbRows[j].id)
+          ]).then(fbLoad);
+        });
+      });
+      el.querySelectorAll("[data-vis]").forEach(function (b) {
+        b.addEventListener("click", function () {
+          var f = fbRows.find(function (x) { return x.id === b.getAttribute("data-vis"); });
+          sb.from("form_fields").update({ visible: !f.visible }).eq("id", f.id).then(fbLoad);
+        });
+      });
+      el.querySelectorAll("[data-ed]").forEach(function (b) {
+        b.addEventListener("click", function () { fbEdit(fbRows.find(function (x) { return x.id === b.getAttribute("data-ed"); })); });
+      });
+      el.querySelectorAll("[data-del]").forEach(function (b) {
+        b.addEventListener("click", function () {
+          if (!confirm("Delete this field permanently?")) return;
+          sb.from("form_fields").delete().eq("id", b.getAttribute("data-del")).then(fbLoad);
+        });
+      });
+    });
+  }
+  function fbEdit(f) {
+    fbEditing = f;
+    $("fb-editor").style.display = "";
+    $("fb-ed-title").textContent = f.id ? "Edit Field" : "New Field";
+    $("fb-label").value = f.label || ""; $("fb-key").value = f.field_key || "";
+    $("fb-type").value = f.type || "text"; $("fb-req").value = String(!!f.required);
+    $("fb-ph").value = f.placeholder || ""; $("fb-width").value = f.width || "";
+    $("fb-step").value = f.step || 1;
+    $("fb-options").value = (f.options || []).join("\n");
+    $("fb-si-field").value = (f.show_if && f.show_if.field) || "";
+    $("fb-si-values").value = (f.show_if && (f.show_if.values || []).join(", ")) || "";
+    $("fb-editor").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  $("fb-save").addEventListener("click", function () {
+    var key = $("fb-key").value.trim().toLowerCase().replace(/[^a-z0-9_]/g, "_");
+    if (!$("fb-label").value.trim() || !key) return msg("Label and field key are required.", false);
+    var payload = {
+      form: $("fb-form").value, label: $("fb-label").value.trim(), field_key: key,
+      type: $("fb-type").value, required: $("fb-req").value === "true",
+      placeholder: $("fb-ph").value.trim() || null, width: $("fb-width").value || null,
+      step: parseInt($("fb-step").value, 10) || 1,
+      options: $("fb-options").value.split("\n").map(function (s) { return s.trim(); }).filter(Boolean),
+      show_if: $("fb-si-field").value.trim() ? { field: $("fb-si-field").value.trim(), values: $("fb-si-values").value.split(",").map(function (s) { return s.trim(); }).filter(Boolean) } : null
+    };
+    var op = fbEditing.id ? sb.from("form_fields").update(payload).eq("id", fbEditing.id)
+                          : sb.from("form_fields").insert(Object.assign(payload, { sort: (fbRows.length ? Math.max.apply(null, fbRows.map(function (x) { return x.sort; })) + 10 : 10), visible: true }));
+    op.then(function (r) {
+      if (r.error) return msg(r.error.message, false);
+      msg("Field saved", true); $("fb-editor").style.display = "none"; fbLoad();
+    });
+  });
+  $("fb-cancel").addEventListener("click", function () { $("fb-editor").style.display = "none"; });
+  $("fb-add").addEventListener("click", function () { fbEdit({ step: 1 }); });
+  $("fb-import").addEventListener("click", function () {
+    var fm = $("fb-form").value;
+    var seed = (window.SK_SEED_FORMS || {})[fm];
+    if (!seed) return msg("No defaults available.", false);
+    if (fbRows.length && !confirm("This form already has fields. Import defaults anyway?")) return;
+    var base = fbRows.length ? Math.max.apply(null, fbRows.map(function (x) { return x.sort; })) : 0;
+    var rows = seed.map(function (f, i) {
+      return { form: fm, field_key: f.field_key, label: f.label, type: f.type, required: !!f.required, placeholder: f.placeholder || null, width: f.width || null, step: f.step || 1, options: f.options || [], show_if: f.show_if || null, sort: base + (i + 1) * 10, visible: true };
+    });
+    sb.from("form_fields").insert(rows).then(function (r) { r.error ? msg(r.error.message, false) : (msg("Default fields imported — the live form is now editable here.", true), fbLoad()); });
+  });
+  $("fb-form").addEventListener("change", fbLoad);
+
+  /* ===== generic CRUD (journal / portfolio / testimonials) ===== */
   function bindCrud(cfg) {
     function load() {
       sb.from(cfg.table).select("*").order("created_at", { ascending: false }).then(function (r) {
@@ -271,16 +524,14 @@ select.status { background: #11100e; color: #cfc9ba; border: 1px solid #3a362f; 
         el.innerHTML = r.data.map(cfg.render).join("");
         el.querySelectorAll("[data-edit]").forEach(function (b) {
           b.addEventListener("click", function () {
-            var item = cfg.cache.find(function (x) { return x.id === b.getAttribute("data-edit"); });
-            cfg.fill(item); window.scrollTo({ top: 0, behavior: "smooth" });
+            cfg.fill(cfg.cache.find(function (x) { return x.id === b.getAttribute("data-edit"); }));
+            window.scrollTo({ top: 0, behavior: "smooth" });
           });
         });
         el.querySelectorAll("[data-del]").forEach(function (b) {
           b.addEventListener("click", function () {
             if (!confirm("Delete permanently?")) return;
-            sb.from(cfg.table).delete().eq("id", b.getAttribute("data-del")).then(function (r) {
-              r.error ? msg(r.error.message, false) : load();
-            });
+            sb.from(cfg.table).delete().eq("id", b.getAttribute("data-del")).then(function (r2) { r2.error ? msg(r2.error.message, false) : load(); });
           });
         });
       });
@@ -289,8 +540,7 @@ select.status { background: #11100e; color: #cfc9ba; border: 1px solid #3a362f; 
       var payload = cfg.collect();
       if (!payload) return;
       var id = $(cfg.idField).value;
-      var q = id ? sb.from(cfg.table).update(payload).eq("id", id) : sb.from(cfg.table).insert(payload);
-      q.then(function (r) {
+      (id ? sb.from(cfg.table).update(payload).eq("id", id) : sb.from(cfg.table).insert(payload)).then(function (r) {
         if (r.error) return msg(r.error.message, false);
         msg("Saved", true); cfg.clear(); load();
       });
@@ -299,101 +549,96 @@ select.status { background: #11100e; color: #cfc9ba; border: 1px solid #3a362f; 
     cfg.load = load;
     return cfg;
   }
-
-  /* ---------- journal ---------- */
-  var journal = bindCrud({
+  var jpObj = bindCrud({
     table: "journal_posts", list: "jp-list", save: "jp-save", clearBtn: "jp-clear", idField: "jp-id",
-    render: function (p) {
-      return '<div class="row"><div class="top"><span class="t">' + esc(p.title) + '</span><span class="m">' + esc(p.category) + (p.published ? "" : " · DRAFT") + '</span></div>' +
-        '<div class="body">' + esc(p.excerpt || "") + '</div>' +
-        '<div class="actions"><button class="abtn" data-edit="' + p.id + '">Edit</button><button class="abtn danger" data-del="' + p.id + '">Delete</button></div></div>';
-    },
+    render: function (p) { return '<div class="row"><div class="top"><span class="t">' + esc(p.title) + '</span><span class="m">' + esc(p.category) + (p.published ? "" : " · DRAFT") + '</span></div><div class="body">' + esc(p.excerpt || "") + '</div><div class="actions"><button class="abtn" data-edit="' + p.id + '">Edit</button><button class="abtn danger" data-del="' + p.id + '">Delete</button></div></div>'; },
     collect: function () {
       var t = $("jp-title").value.trim(), b = $("jp-body").value.trim();
       if (!t || !b) { msg("Title and body are required", false); return null; }
       return { title: t, category: $("jp-category").value, excerpt: $("jp-excerpt").value.trim(), body: b, read_time: $("jp-rt").value.trim() || "5 min read", published: $("jp-pub").value === "true" };
     },
-    fill: function (p) {
-      $("jp-id").value = p.id; $("jp-title").value = p.title; $("jp-category").value = p.category;
-      $("jp-excerpt").value = p.excerpt || ""; $("jp-body").value = p.body; $("jp-rt").value = p.read_time || "";
-      $("jp-pub").value = String(p.published); $("jp-form-title").textContent = "Edit Journal Post";
-    },
-    clear: function () {
-      ["jp-id","jp-title","jp-excerpt","jp-body"].forEach(function (i) { $(i).value = ""; });
-      $("jp-rt").value = "5 min read"; $("jp-pub").value = "true"; $("jp-form-title").textContent = "New Journal Post";
-    }
+    fill: function (p) { $("jp-id").value = p.id; $("jp-title").value = p.title; $("jp-category").value = p.category; $("jp-excerpt").value = p.excerpt || ""; $("jp-body").value = p.body; $("jp-rt").value = p.read_time || ""; $("jp-pub").value = String(p.published); $("jp-form-title").textContent = "Edit Journal Post"; },
+    clear: function () { ["jp-id", "jp-title", "jp-excerpt", "jp-body"].forEach(function (i) { $(i).value = ""; }); $("jp-rt").value = "5 min read"; $("jp-pub").value = "true"; $("jp-form-title").textContent = "New Journal Post"; }
   });
-  function loadJournal() { journal.load(); }
-
-  /* ---------- portfolio ---------- */
-  var portfolio = bindCrud({
+  var pfObj = bindCrud({
     table: "portfolio_items", list: "pf-list", save: "pf-save", clearBtn: "pf-clear", idField: "pf-id",
-    render: function (p) {
-      return '<div class="row"><div class="top"><span class="t">' + esc(p.title) + '</span><span class="m">' + esc(p.category) + ' · ' + esc(p.era) + (p.published ? "" : " · HIDDEN") + '</span></div>' +
-        '<div class="body">' + esc(p.caption || "") + (p.image_url ? "\nimage: " + esc(p.image_url) : "\n(placeholder frame)") + '</div>' +
-        '<div class="actions"><button class="abtn" data-edit="' + p.id + '">Edit</button><button class="abtn danger" data-del="' + p.id + '">Delete</button></div></div>';
-    },
+    render: function (p) { return '<div class="row"><div class="top"><span class="t">' + esc(p.title) + '</span><span class="m">' + esc(p.category) + " · " + esc(p.era) + (p.published ? "" : " · HIDDEN") + '</span></div><div class="body">' + esc(p.caption || "") + (p.image_url ? "\nimage: " + esc(p.image_url) : "\n(placeholder frame)") + '</div><div class="actions"><button class="abtn" data-edit="' + p.id + '">Edit</button><button class="abtn danger" data-del="' + p.id + '">Delete</button></div></div>'; },
     collect: function () {
       var t = $("pf-title").value.trim();
       if (!t) { msg("Title is required", false); return null; }
       return { title: t, category: $("pf-category").value, era: $("pf-era").value, ratio: $("pf-ratio").value, caption: $("pf-caption").value.trim(), image_url: $("pf-image").value.trim() || null, published: $("pf-pub").value === "true" };
     },
-    fill: function (p) {
-      $("pf-id").value = p.id; $("pf-title").value = p.title; $("pf-category").value = p.category;
-      $("pf-era").value = p.era; $("pf-ratio").value = p.ratio || "r-34"; $("pf-caption").value = p.caption || "";
-      $("pf-image").value = p.image_url || ""; $("pf-pub").value = String(p.published);
-      $("pf-form-title").textContent = "Edit Portfolio Item";
-    },
-    clear: function () {
-      ["pf-id","pf-title","pf-caption","pf-image"].forEach(function (i) { $(i).value = ""; });
-      $("pf-pub").value = "true"; $("pf-form-title").textContent = "New Portfolio Item";
-    }
+    fill: function (p) { $("pf-id").value = p.id; $("pf-title").value = p.title; $("pf-category").value = p.category; $("pf-era").value = p.era; $("pf-ratio").value = p.ratio || "r-34"; $("pf-caption").value = p.caption || ""; $("pf-image").value = p.image_url || ""; $("pf-pub").value = String(p.published); $("pf-form-title").textContent = "Edit Portfolio Item"; },
+    clear: function () { ["pf-id", "pf-title", "pf-caption", "pf-image"].forEach(function (i) { $(i).value = ""; }); $("pf-pub").value = "true"; $("pf-form-title").textContent = "New Portfolio Item"; }
   });
-  function loadPortfolio() { portfolio.load(); }
-
-  /* ---------- testimonials ---------- */
-  var testimonials = bindCrud({
+  var tsObj = bindCrud({
     table: "testimonials", list: "ts-list", save: "ts-save", clearBtn: "ts-clear", idField: "ts-id",
-    render: function (t) {
-      return '<div class="row"><div class="top"><span class="t">' + esc(t.name) + '</span><span class="m">' + esc(t.role || "") + (t.published ? "" : " · HIDDEN") + '</span></div>' +
-        '<div class="body">' + esc(t.quote) + '</div>' +
-        '<div class="actions"><button class="abtn" data-edit="' + t.id + '">Edit</button><button class="abtn danger" data-del="' + t.id + '">Delete</button></div></div>';
-    },
+    render: function (t) { return '<div class="row"><div class="top"><span class="t">' + esc(t.name) + '</span><span class="m">' + esc(t.role || "") + (t.published ? "" : " · HIDDEN") + '</span></div><div class="body">' + esc(t.quote) + '</div><div class="actions"><button class="abtn" data-edit="' + t.id + '">Edit</button><button class="abtn danger" data-del="' + t.id + '">Delete</button></div></div>'; },
     collect: function () {
       var n = $("ts-name").value.trim(), q = $("ts-quote").value.trim();
       if (!n || !q) { msg("Name and quote are required", false); return null; }
       return { name: n, role: $("ts-role").value.trim(), quote: q, published: $("ts-pub").value === "true" };
     },
-    fill: function (t) {
-      $("ts-id").value = t.id; $("ts-name").value = t.name; $("ts-role").value = t.role || "";
-      $("ts-quote").value = t.quote; $("ts-pub").value = String(t.published);
-      $("ts-form-title").textContent = "Edit Testimonial";
-    },
-    clear: function () {
-      ["ts-id","ts-name","ts-role","ts-quote"].forEach(function (i) { $(i).value = ""; });
-      $("ts-pub").value = "true"; $("ts-form-title").textContent = "New Testimonial";
-    }
+    fill: function (t) { $("ts-id").value = t.id; $("ts-name").value = t.name; $("ts-role").value = t.role || ""; $("ts-quote").value = t.quote; $("ts-pub").value = String(t.published); $("ts-form-title").textContent = "Edit Testimonial"; },
+    clear: function () { ["ts-id", "ts-name", "ts-role", "ts-quote"].forEach(function (i) { $(i).value = ""; }); $("ts-pub").value = "true"; $("ts-form-title").textContent = "New Testimonial"; }
   });
-  function loadTestimonials() { testimonials.load(); }
 
-  /* ---------- settings ---------- */
-  function loadSettings() {
-    sb.from("site_settings").select("*").then(function (r) {
-      if (r.error) return msg("Settings: " + r.error.message, false);
-      r.data.forEach(function (s) {
-        if (s.key === "hero_headline") $("st-hero-headline").value = s.value || "";
-        if (s.key === "hero_lede") $("st-hero-lede").value = s.value || "";
+  /* ===== nav flyouts ===== */
+  var nvCache = [];
+  function nvLoad() {
+    sb.from("nav_flyouts").select("*").order("sort").then(function (r) {
+      if (r.error) return msg("Menus: " + r.error.message, false);
+      nvCache = r.data;
+      var el = $("nv-list");
+      if (!r.data.length) { el.innerHTML = '<div class="empty">No custom flyouts yet — the site shows its built-in defaults. Save one above to override.</div>'; return; }
+      el.innerHTML = r.data.map(function (f) {
+        return '<div class="row' + (f.visible ? "" : " hidden-row") + '"><div class="top"><span class="t">' + esc(f.nav_key) + '</span><span class="m">' + esc(f.eyebrow || "") + '</span></div><div class="body">' + esc(f.description || "") + "\n" + (f.links || []).map(function (l) { return l.label + " → " + l.href; }).join("\n") + '</div><div class="actions"><button class="abtn" data-edit="' + f.id + '">Edit</button><button class="abtn danger" data-del="' + f.id + '">Delete</button></div></div>';
+      }).join("");
+      el.querySelectorAll("[data-edit]").forEach(function (b) {
+        b.addEventListener("click", function () {
+          var f = nvCache.find(function (x) { return x.id === b.getAttribute("data-edit"); });
+          $("nv-id").value = f.id; $("nv-key").value = f.nav_key; $("nv-eyebrow").value = f.eyebrow || "";
+          $("nv-desc").value = f.description || "";
+          $("nv-links").value = (f.links || []).map(function (l) { return l.label + " | " + l.href; }).join("\n");
+          $("nv-vis").value = String(f.visible);
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      });
+      el.querySelectorAll("[data-del]").forEach(function (b) {
+        b.addEventListener("click", function () {
+          if (!confirm("Delete this flyout (the built-in default returns)?")) return;
+          sb.from("nav_flyouts").delete().eq("id", b.getAttribute("data-del")).then(nvLoad);
+        });
       });
     });
   }
-  $("st-save").addEventListener("click", function () {
-    var rows = [
-      { key: "hero_headline", value: $("st-hero-headline").value.trim() },
-      { key: "hero_lede", value: $("st-hero-lede").value.trim() }
-    ];
-    sb.from("site_settings").upsert(rows).then(function (r) {
-      r.error ? msg(r.error.message, false) : msg("Site text saved", true);
+  $("nv-save").addEventListener("click", function () {
+    var links = $("nv-links").value.split("\n").map(function (l) {
+      var p = l.split("|");
+      return p.length >= 2 ? { label: p[0].trim(), href: p.slice(1).join("|").trim() } : null;
+    }).filter(Boolean);
+    var payload = { nav_key: $("nv-key").value, eyebrow: $("nv-eyebrow").value.trim(), description: $("nv-desc").value.trim(), links: links, visible: $("nv-vis").value === "true", sort: 10 };
+    var id = $("nv-id").value;
+    (id ? sb.from("nav_flyouts").update(payload).eq("id", id) : sb.from("nav_flyouts").insert(payload)).then(function (r) {
+      if (r.error) return msg(r.error.message, false);
+      msg("Flyout saved", true); $("nv-id").value = ""; nvLoad();
     });
+  });
+  $("nv-clear").addEventListener("click", function () { ["nv-id", "nv-eyebrow", "nv-desc", "nv-links"].forEach(function (i) { $(i).value = ""; }); });
+
+  /* ===== welcome settings ===== */
+  var WL_KEYS = { "wl-enabled": "welcome_enabled", "wl-frequency": "welcome_frequency", "wl-eyebrow": "welcome_eyebrow", "wl-headline": "welcome_headline", "wl-sub": "welcome_sub", "wl-cta": "welcome_cta", "wl-image": "welcome_image_url", "wl-sound": "welcome_sound", "wl-sound-url": "welcome_sound_url" };
+  function wlLoad() {
+    sb.from("site_settings").select("*").then(function (r) {
+      if (r.error) return;
+      var map = {};
+      r.data.forEach(function (s) { map[s.key] = s.value; });
+      Object.keys(WL_KEYS).forEach(function (id) { if (map[WL_KEYS[id]] != null) $(id).value = map[WL_KEYS[id]]; });
+    });
+  }
+  $("wl-save").addEventListener("click", function () {
+    var rows = Object.keys(WL_KEYS).map(function (id) { return { key: WL_KEYS[id], value: $(id).value.trim() }; });
+    sb.from("site_settings").upsert(rows).then(function (r) { r.error ? msg(r.error.message, false) : msg("Welcome settings saved", true); });
   });
 })();
 </script>
