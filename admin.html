@@ -4,29 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow">
-<title>Admin — Sudeep Kapoor</title>
+<title>Studio Admin — Sudeep Kapoor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <style>
-body { background: var(--ink); color: #cfc9ba; }
-.admin-wrap { max-width: 1150px; margin: 0 auto; padding: 2rem clamp(1rem,3vw,2rem) 5rem; }
-.admin-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; padding: 1.5rem 0 1rem; border-bottom: 1px solid #2b2823; }
-.admin-head h1 { font-size: 1.8rem; color: var(--ivory); }
-.admin-head .sub { font-size: .65rem; letter-spacing: .28em; text-transform: uppercase; color: #c96a55; }
-.tabs { display: flex; gap: .5rem; flex-wrap: wrap; margin: 1.5rem 0; }
-.tab-btn { background: none; border: 1px solid #2b2823; color: #a9a291; font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; padding: .55rem 1rem; }
-.tab-btn.active { background: var(--red); border-color: var(--red); color: #fff; }
-.panel { display: none; }
-.panel.active { display: block; }
-.row { background: #171512; border: 1px solid #2b2823; padding: 1rem 1.2rem; margin-bottom: .7rem; }
+body { background: #0f0e0c; color: #cfc9ba; }
+.shell { display: flex; min-height: 100vh; }
+.sidebar { width: 230px; flex-shrink: 0; background: #12100e; border-right: 1px solid #23211d; padding: 1.6rem 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+.sidebar .brand { padding: 0 1.4rem 1.4rem; border-bottom: 1px solid #23211d; }
+.sidebar .brand .n { font-family: var(--font-display); font-size: 1.25rem; color: var(--ivory); }
+.sidebar .brand .s { font-size: .55rem; letter-spacing: .3em; text-transform: uppercase; color: #c96a55; }
+.side-group { padding: 1.2rem 1.4rem .3rem; font-size: .58rem; letter-spacing: .26em; text-transform: uppercase; color: #6f6a5e; }
+.side-link { display: flex; justify-content: space-between; align-items: center; width: 100%; text-align: left; background: none; border: none; color: #a9a291; font-size: .84rem; padding: .55rem 1.4rem; border-left: 2px solid transparent; }
+.side-link:hover { color: var(--ivory); background: #171512; }
+.side-link.active { color: var(--ivory); border-left-color: var(--red); background: #171512; }
+.content { flex: 1; padding: 2rem clamp(1.2rem, 3vw, 2.5rem) 5rem; min-width: 0; }
+.content-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.6rem; }
+.content-head h1 { font-size: 1.7rem; color: var(--ivory); }
+.panel { display: none; } .panel.active { display: block; }
+.row { background: #171512; border: 1px solid #23211d; padding: 1rem 1.2rem; margin-bottom: .7rem; }
 .row.hidden-row { opacity: .45; }
 .row .top { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; flex-wrap: wrap; }
 .row .t { font-family: var(--font-display); font-size: 1.1rem; color: var(--ivory); }
 .row .m { font-size: .7rem; color: #8d8676; }
 .row .body { font-size: .85rem; color: #a9a291; margin-top: .5rem; white-space: pre-wrap; }
 .row .actions { display: flex; gap: .5rem; margin-top: .7rem; flex-wrap: wrap; align-items: center; }
-.abtn { background: none; border: 1px solid #3a362f; color: #cfc9ba; font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; padding: .35rem .8rem; }
+.abtn { background: none; border: 1px solid #3a362f; color: #cfc9ba; font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; padding: .35rem .8rem; cursor: pointer; }
 .abtn:hover { border-color: var(--ivory); }
 .abtn.danger { color: #c96a55; border-color: #57302a; }
 .abtn.danger:hover { background: var(--red); border-color: var(--red); color: #fff; }
@@ -34,57 +38,103 @@ body { background: var(--ink); color: #cfc9ba; }
 select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px solid #3a362f; padding: .45rem .6rem; font-size: .8rem; }
 .editor { background: #171512; border: 1px solid #3a362f; padding: 1.5rem; margin: 1rem 0 2rem; }
 .editor h3 { color: var(--ivory); margin-bottom: 1rem; font-size: 1.2rem; }
-.msg { padding: .8rem 1rem; font-size: .85rem; margin: 1rem 0; display: none; border: 1px solid; }
+.msg { position: fixed; bottom: 1.4rem; right: 1.4rem; z-index: 400; padding: .9rem 1.2rem; font-size: .85rem; display: none; border: 1px solid; background: #12100e; max-width: 360px; }
 .msg.ok { display: block; color: #9cb87a; border-color: #3d4a2e; }
 .msg.err { display: block; color: #c96a55; border-color: #57302a; }
 .empty { color: #8d8676; font-size: .9rem; padding: 1.6rem 0; }
-#login-view { max-width: 420px; margin: 12vh auto 0; }
-.count-pill { font-size: .6rem; background: #2b2823; padding: .12rem .5rem; border-radius: 9px; margin-left: .3rem; }
+#login-view { max-width: 420px; margin: 12vh auto 0; padding: 0 1rem; }
+.count-pill { font-size: .6rem; background: #2b2823; padding: .12rem .5rem; border-radius: 9px; }
 .toolbar { display: flex; gap: .7rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.2rem; }
 .hint { font-size: .72rem; color: #8d8676; margin-top: .4rem; line-height: 1.5; }
 .field label { color: #cfc9ba; }
+/* dashboard */
+.dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: .8rem; margin-bottom: 2rem; }
+.dash-card { background: #171512; border: 1px solid #23211d; padding: 1.2rem 1.3rem; }
+.dash-card .n { font-family: var(--font-display); font-size: 2rem; color: #d8b98a; line-height: 1; }
+.dash-card .l { font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; color: #8d8676; margin-top: .5rem; }
+/* media library */
+.media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: .9rem; }
+.media-card { background: #171512; border: 1px solid #23211d; }
+.media-card .thumb { aspect-ratio: 1; background: #0c0b0a center/cover no-repeat; display: flex; align-items: center; justify-content: center; color: #6f6a5e; font-size: .65rem; }
+.media-card .mi { padding: .6rem .7rem; }
+.media-card .nm { font-size: .68rem; color: #a9a291; word-break: break-all; }
+.media-card .actions { display: flex; gap: .4rem; margin-top: .5rem; }
+.media-card .abtn { padding: .25rem .5rem; font-size: .58rem; }
+/* block picker modal */
+.modal-bg { position: fixed; inset: 0; z-index: 300; background: rgba(6,5,5,.8); display: none; align-items: center; justify-content: center; padding: 2rem; }
+.modal-bg.open { display: flex; }
+.modal { background: #171512; border: 1px solid #3a362f; max-width: 720px; width: 100%; max-height: 80vh; overflow-y: auto; padding: 1.8rem; }
+.modal h3 { color: var(--ivory); margin-bottom: 1.2rem; }
+.kind-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: .7rem; }
+.kind-card { background: #12100e; border: 1px solid #2b2823; padding: 1rem; text-align: left; cursor: pointer; }
+.kind-card:hover { border-color: var(--red); }
+.kind-card .kt { font-family: var(--font-display); font-size: 1.05rem; color: var(--ivory); }
+.kind-card .kd { font-size: .7rem; color: #8d8676; margin-top: .3rem; line-height: 1.45; }
+details.adv { margin-top: 1rem; }
+details.adv summary { font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; color: #8d8676; cursor: pointer; }
+@media (max-width: 860px) {
+  .shell { flex-direction: column; }
+  .sidebar { width: 100%; height: auto; position: static; display: flex; overflow-x: auto; padding: .6rem; }
+  .sidebar .brand, .side-group { display: none; }
+  .side-link { white-space: nowrap; border-left: none; border-bottom: 2px solid transparent; }
+  .side-link.active { border-bottom-color: var(--red); }
+}
 </style>
 </head>
 <body>
-<div class="admin-wrap">
 
-  <div id="login-view">
-    <div class="admin-head" style="border:none"><div><h1>Sudeep Kapoor</h1><span class="sub">Site Administration</span></div></div>
-    <form id="login-form" class="editor" style="margin-top:1rem">
-      <h3>Sign In</h3>
-      <div class="field" style="margin-bottom:1rem"><label for="l-email">Email</label><input id="l-email" type="email" required autocomplete="username"></div>
-      <div class="field" style="margin-bottom:1.4rem"><label for="l-pass">Password</label><input id="l-pass" type="password" required autocomplete="current-password"></div>
-      <button type="submit" class="btn btn-red" style="width:100%">Sign In</button>
-      <div class="msg" id="login-msg"></div>
-    </form>
-  </div>
+<div id="login-view">
+  <div style="padding:1.5rem 0"><div style="font-family:var(--font-display);font-size:1.8rem;color:var(--ivory)">Sudeep Kapoor</div><div style="font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:#c96a55">Studio Administration</div></div>
+  <form id="login-form" class="editor" style="margin-top:.5rem">
+    <h3>Sign In</h3>
+    <div class="field" style="margin-bottom:1rem"><label for="l-email">Email</label><input id="l-email" type="email" required autocomplete="username"></div>
+    <div class="field" style="margin-bottom:1.4rem"><label for="l-pass">Password</label><input id="l-pass" type="password" required autocomplete="current-password"></div>
+    <button type="submit" class="btn btn-red" style="width:100%">Sign In</button>
+    <div class="msg" id="login-msg" style="position:static;margin-top:1rem"></div>
+  </form>
+</div>
 
-  <div id="app-view" style="display:none">
-    <div class="admin-head">
-      <div><h1>Site Administration</h1><span class="sub">Sudeep Kapoor — 41+ Years Behind the Lens</span></div>
-      <div style="display:flex;gap:.8rem"><a class="abtn" href="index.html" target="_blank" rel="noopener">View Site</a><button class="abtn danger" id="logout-btn">Sign Out</button></div>
+<div class="shell" id="app-view" style="display:none">
+  <aside class="sidebar">
+    <div class="brand"><div class="n">Studio Admin</div><div class="s">Sudeep Kapoor</div></div>
+    <div class="side-group">Overview</div>
+    <button class="side-link active" data-tab="dash">Dashboard</button>
+    <button class="side-link" data-tab="subs">Submissions <span class="count-pill" id="cnt-subs">–</span></button>
+    <div class="side-group">Content</div>
+    <button class="side-link" data-tab="pages">Page Builder</button>
+    <button class="side-link" data-tab="journal">Journal</button>
+    <button class="side-link" data-tab="portfolio">Portfolio</button>
+    <button class="side-link" data-tab="testimonials">Testimonials</button>
+    <button class="side-link" data-tab="media">Media Library</button>
+    <div class="side-group">Site</div>
+    <button class="side-link" data-tab="forms">Form Builder</button>
+    <button class="side-link" data-tab="nav">Header Menus</button>
+    <button class="side-link" data-tab="welcome">Welcome Page</button>
+    <div class="side-group">&nbsp;</div>
+    <button class="side-link" id="view-site">↗ View Site</button>
+    <button class="side-link" id="logout-btn" style="color:#c96a55">Sign Out</button>
+  </aside>
+
+  <main class="content">
+
+    <!-- Dashboard -->
+    <div class="panel active" id="panel-dash">
+      <div class="content-head"><h1>Dashboard</h1><span class="m" id="dash-date"></span></div>
+      <div class="dash-grid" id="dash-cards"></div>
+      <h3 style="color:var(--ivory);margin-bottom:1rem">Latest Submissions</h3>
+      <div id="dash-recent"><div class="empty">Loading…</div></div>
     </div>
-
-    <div class="tabs">
-      <button class="tab-btn active" data-tab="subs">Submissions<span class="count-pill" id="cnt-subs">–</span></button>
-      <button class="tab-btn" data-tab="pages">Page Builder</button>
-      <button class="tab-btn" data-tab="forms">Form Builder</button>
-      <button class="tab-btn" data-tab="journal">Journal</button>
-      <button class="tab-btn" data-tab="portfolio">Portfolio</button>
-      <button class="tab-btn" data-tab="testimonials">Testimonials</button>
-      <button class="tab-btn" data-tab="nav">Menus</button>
-      <button class="tab-btn" data-tab="welcome">Welcome Page</button>
-    </div>
-    <div class="msg" id="app-msg"></div>
 
     <!-- Submissions -->
-    <div class="panel active" id="panel-subs">
-      <div class="toolbar"><label>Show:</label><select id="sub-filter"><option value="">All forms</option><option value="contact">Contact enquiries</option><option value="mentorship">Mentorship applications</option></select></div>
+    <div class="panel" id="panel-subs">
+      <div class="content-head"><h1>Submissions</h1></div>
+      <div class="toolbar"><label>Show:</label><select id="sub-filter"><option value="">All forms</option><option value="contact">Contact enquiries</option><option value="mentorship">Mentorship applications</option></select><input id="sub-search" type="text" placeholder="Search name or email…" style="background:#11100e;color:#cfc9ba;border:1px solid #3a362f;padding:.45rem .7rem;font-size:.8rem;flex:1;max-width:280px"></div>
       <div id="sub-list"><div class="empty">Loading…</div></div>
     </div>
 
     <!-- Page builder -->
     <div class="panel" id="panel-pages">
+      <div class="content-head"><h1>Page Builder</h1></div>
       <div class="toolbar">
         <label>Page:</label>
         <select id="pb-page">
@@ -92,15 +142,19 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
           <option value="portfolio">Portfolio</option><option value="services">Services</option><option value="mentorship">Mentorship</option>
           <option value="journal">Journal</option><option value="speaking">Speaking</option><option value="contact">Contact</option>
         </select>
-        <button class="abtn" id="pb-add">+ Add Section</button>
+        <button class="abtn primary" id="pb-add">+ Add Section</button>
         <button class="abtn" id="pb-import">Import Default Sections</button>
+        <a class="abtn" id="pb-preview" href="index.html" target="_blank" rel="noopener">Preview Page ↗</a>
       </div>
-      <p class="hint">Sections render on the live page top-to-bottom. Use ↑ ↓ to reorder, the eye to hide/show, Edit to change text and images. If a page has no sections here, the live site shows its original built-in design.</p>
+      <p class="hint">Sections appear on the live page top-to-bottom. ↑ ↓ reorder · eye hides/shows · Edit changes text and images. A page with no sections here shows its original built-in design.</p>
       <div class="editor" id="pb-editor" style="display:none">
         <h3 id="pb-ed-title">Edit Section</h3>
         <div class="form-grid" id="pb-fields"></div>
-        <div class="field" style="margin-top:1rem"><label>Advanced (raw JSON — for fine control)</label><textarea id="pb-json" style="min-height:120px;font-family:monospace;font-size:.78rem"></textarea></div>
-        <div class="actions" style="margin-top:1rem;display:flex;gap:.6rem">
+        <div id="pb-lists"></div>
+        <details class="adv"><summary>Advanced (raw JSON)</summary>
+          <div class="field" style="margin-top:.8rem"><textarea id="pb-json" style="min-height:120px;font-family:monospace;font-size:.75rem"></textarea></div>
+        </details>
+        <div class="actions" style="margin-top:1.2rem;display:flex;gap:.6rem">
           <button class="abtn primary" id="pb-save">Save Section</button>
           <button class="abtn" id="pb-cancel">Cancel</button>
         </div>
@@ -110,26 +164,27 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
 
     <!-- Form builder -->
     <div class="panel" id="panel-forms">
+      <div class="content-head"><h1>Form Builder</h1></div>
       <div class="toolbar">
         <label>Form:</label>
         <select id="fb-form"><option value="contact">Contact / Enquiry form</option><option value="mentorship">Mentorship application</option></select>
-        <button class="abtn" id="fb-add">+ Add Field</button>
+        <button class="abtn primary" id="fb-add">+ Add Field</button>
         <button class="abtn" id="fb-import">Import Default Fields</button>
       </div>
-      <p class="hint">Reorder with ↑ ↓. "Show only when" makes a field appear based on another field's answer (e.g. only for certain enquiry types). If a form has no fields here, the live site uses the original built-in form.</p>
+      <p class="hint">"Show only when" makes a field appear based on another field's answer. A form with no fields here uses the original built-in form.</p>
       <div class="editor" id="fb-editor" style="display:none">
         <h3 id="fb-ed-title">Edit Field</h3>
         <div class="form-grid">
           <div class="field"><label>Label</label><input id="fb-label" type="text"></div>
-          <div class="field"><label>Field key (short, no spaces — used in the database)</label><input id="fb-key" type="text" placeholder="e.g. company_size"></div>
+          <div class="field"><label>Field key (short, no spaces)</label><input id="fb-key" type="text" placeholder="e.g. company_size"></div>
           <div class="field"><label>Type</label><select id="fb-type"><option>text</option><option>email</option><option>tel</option><option>url</option><option>textarea</option><option>select</option><option>checkbox</option></select></div>
           <div class="field"><label>Required</label><select id="fb-req"><option value="false">Optional</option><option value="true">Required</option></select></div>
           <div class="field"><label>Placeholder</label><input id="fb-ph" type="text"></div>
           <div class="field"><label>Width</label><select id="fb-width"><option value="">Half</option><option value="full">Full</option></select></div>
-          <div class="field"><label>Step (mentorship form: 1–3; contact: always 1)</label><input id="fb-step" type="number" min="1" max="3" value="1"></div>
-          <div class="field full"><label>Dropdown options (one per line — only for type "select")</label><textarea id="fb-options"></textarea></div>
+          <div class="field"><label>Step (mentorship: 1–3)</label><input id="fb-step" type="number" min="1" max="3" value="1"></div>
+          <div class="field full"><label>Dropdown options (one per line — type "select" only)</label><textarea id="fb-options"></textarea></div>
           <div class="field"><label>Show only when field…</label><input id="fb-si-field" type="text" placeholder="e.g. enquiry_type"></div>
-          <div class="field"><label>…has one of these values (comma-separated)</label><input id="fb-si-values" type="text" placeholder="e.g. Portrait Session, Mentorship"></div>
+          <div class="field"><label>…has one of these values (comma-separated)</label><input id="fb-si-values" type="text"></div>
         </div>
         <div class="actions" style="margin-top:1rem;display:flex;gap:.6rem">
           <button class="abtn primary" id="fb-save">Save Field</button>
@@ -141,6 +196,7 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
 
     <!-- Journal -->
     <div class="panel" id="panel-journal">
+      <div class="content-head"><h1>Journal</h1></div>
       <div class="editor">
         <h3 id="jp-form-title">New Journal Post</h3>
         <input type="hidden" id="jp-id">
@@ -159,6 +215,7 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
 
     <!-- Portfolio -->
     <div class="panel" id="panel-portfolio">
+      <div class="content-head"><h1>Portfolio</h1></div>
       <div class="editor">
         <h3 id="pf-form-title">New Portfolio Item</h3>
         <input type="hidden" id="pf-id">
@@ -168,7 +225,7 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
           <div class="field"><label for="pf-era">Era</label><select id="pf-era"><option value="film">Film Era</option><option value="digital">Digital Era</option></select></div>
           <div class="field"><label for="pf-ratio">Shape</label><select id="pf-ratio"><option value="r-34">Portrait 3:4</option><option value="r-43">Landscape 4:3</option><option value="r-32">Landscape 3:2</option><option value="r-11">Square</option></select></div>
           <div class="field full"><label for="pf-caption">Caption</label><input id="pf-caption" type="text"></div>
-          <div class="field full"><label for="pf-image">Image (upload a file, or paste a URL)</label><div style="display:flex;gap:.6rem"><input id="pf-image" type="url" style="flex:1"><button type="button" class="abtn" data-upload="pf-image">Upload…</button></div></div>
+          <div class="field full"><label for="pf-image">Image (upload or paste URL)</label><div style="display:flex;gap:.6rem"><input id="pf-image" type="url" style="flex:1"><button type="button" class="abtn" data-upload="pf-image">Upload…</button></div></div>
           <div class="field"><label for="pf-pub">Status</label><select id="pf-pub"><option value="true">Published</option><option value="false">Hidden</option></select></div>
         </div>
         <div class="actions" style="margin-top:1rem;display:flex;gap:.6rem"><button class="abtn primary" id="pf-save">Save Item</button><button class="abtn" id="pf-clear">Clear / New</button></div>
@@ -178,6 +235,7 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
 
     <!-- Testimonials -->
     <div class="panel" id="panel-testimonials">
+      <div class="content-head"><h1>Testimonials</h1></div>
       <div class="editor">
         <h3 id="ts-form-title">New Testimonial</h3>
         <input type="hidden" id="ts-id">
@@ -188,14 +246,25 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
           <div class="field"><label for="ts-pub">Status</label><select id="ts-pub"><option value="true">Published</option><option value="false">Hidden</option></select></div>
         </div>
         <div class="actions" style="margin-top:1rem;display:flex;gap:.6rem"><button class="abtn primary" id="ts-save">Save Testimonial</button><button class="abtn" id="ts-clear">Clear / New</button></div>
-        <p class="hint">Only add real testimonials with permission. They appear on the home page automatically.</p>
+        <p class="hint">Only add real testimonials with permission.</p>
       </div>
       <div id="ts-list"><div class="empty">Loading…</div></div>
     </div>
 
-    <!-- Menus / flyouts -->
+    <!-- Media library -->
+    <div class="panel" id="panel-media">
+      <div class="content-head"><h1>Media Library</h1></div>
+      <div class="toolbar">
+        <button class="abtn primary" data-upload="__media__">Upload Files…</button>
+        <span class="hint" style="margin:0">JPEG/PNG/WebP up to 8 MB. Click "Copy URL" then paste anywhere an image is asked for.</span>
+      </div>
+      <div class="media-grid" id="media-grid"><div class="empty">Loading…</div></div>
+    </div>
+
+    <!-- Menus -->
     <div class="panel" id="panel-nav">
-      <p class="hint" style="margin-bottom:1rem">These control the hover menus in the header (About, Portfolio, Services, Mentorship). Links: one per line as <b>Label | web address</b>.</p>
+      <div class="content-head"><h1>Header Menus</h1></div>
+      <p class="hint" style="margin-bottom:1rem">Hover menus for About, Portfolio, Services, Mentorship. Links: one per line as <b>Label | address</b>.</p>
       <div class="editor">
         <h3 id="nv-form-title">Edit Menu Flyout</h3>
         <input type="hidden" id="nv-id">
@@ -203,7 +272,7 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
           <div class="field"><label>Menu item</label><select id="nv-key"><option value="about">About</option><option value="portfolio">Portfolio</option><option value="services">Services</option><option value="mentorship">Mentorship</option></select></div>
           <div class="field"><label>Small label (eyebrow)</label><input id="nv-eyebrow" type="text"></div>
           <div class="field full"><label>Short description</label><input id="nv-desc" type="text"></div>
-          <div class="field full"><label>Links (Label | address — one per line)</label><textarea id="nv-links" placeholder="The Story | about.html&#10;Career Timeline | journey.html"></textarea></div>
+          <div class="field full"><label>Links (Label | address — one per line)</label><textarea id="nv-links"></textarea></div>
           <div class="field"><label>Visible</label><select id="nv-vis"><option value="true">Yes</option><option value="false">No</option></select></div>
         </div>
         <div class="actions" style="margin-top:1rem;display:flex;gap:.6rem"><button class="abtn primary" id="nv-save">Save Flyout</button><button class="abtn" id="nv-clear">Clear / New</button></div>
@@ -213,8 +282,9 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
 
     <!-- Welcome -->
     <div class="panel" id="panel-welcome">
+      <div class="content-head"><h1>Welcome Page</h1></div>
       <div class="editor">
-        <h3>Welcome Page &amp; Shutter Transition</h3>
+        <h3>Welcome Screen &amp; Shutter Transition</h3>
         <div class="form-grid">
           <div class="field"><label>Welcome page</label><select id="wl-enabled"><option value="true">Enabled</option><option value="false">Disabled</option></select></div>
           <div class="field"><label>Show it…</label><select id="wl-frequency"><option value="session">Once per visit (recommended)</option><option value="once">Only first-ever visit</option><option value="always">Every page load</option></select></div>
@@ -224,14 +294,26 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
           <div class="field"><label>Button text</label><input id="wl-cta" type="text"></div>
           <div class="field"><label>Background image (upload or URL)</label><div style="display:flex;gap:.6rem"><input id="wl-image" type="url" style="flex:1"><button type="button" class="abtn" data-upload="wl-image">Upload…</button></div></div>
           <div class="field"><label>Shutter sound</label><select id="wl-sound"><option value="true">On</option><option value="false">Off</option></select></div>
-          <div class="field"><label>Custom sound URL (optional — leave empty for built-in shutter)</label><input id="wl-sound-url" type="url"></div>
+          <div class="field"><label>Custom sound (upload or URL — empty = built-in shutter)</label><div style="display:flex;gap:.6rem"><input id="wl-sound-url" type="url" style="flex:1"><button type="button" class="abtn" data-upload="wl-sound-url">Upload…</button></div></div>
         </div>
         <div class="actions" style="margin-top:1rem"><button class="abtn primary" id="wl-save">Save Welcome Settings</button></div>
-        <p class="hint">The camera-shutter close animation and sound play when a visitor clicks the button. Test it in a private/incognito window — after seeing it once, your normal browser hides it for the rest of the visit.</p>
+        <p class="hint">Test in a private/incognito window — after seeing it once, your normal browser hides it for the rest of the visit.</p>
       </div>
     </div>
+
+  </main>
+</div>
+
+<!-- block picker -->
+<div class="modal-bg" id="kind-modal">
+  <div class="modal">
+    <h3>Add a Section</h3>
+    <div class="kind-grid" id="kind-grid"></div>
+    <div style="margin-top:1.2rem;text-align:right"><button class="abtn" id="kind-cancel">Cancel</button></div>
   </div>
 </div>
+
+<div class="msg" id="app-msg"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="js/config.js"></script>
@@ -242,72 +324,108 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
   var sb = window.supabase.createClient(window.SK_SUPABASE.url, window.SK_SUPABASE.key);
   var $ = function (id) { return document.getElementById(id); };
   function esc(s) { var d = document.createElement("div"); d.textContent = s == null ? "" : String(s); return d.innerHTML; }
-  function msg(text, ok) { var el = $("app-msg"); el.className = "msg " + (ok ? "ok" : "err"); el.textContent = text; setTimeout(function () { el.className = "msg"; }, 4500); }
+  var msgTimer;
+  function msg(text, ok) {
+    var el = $("app-msg"); el.className = "msg " + (ok ? "ok" : "err"); el.textContent = text;
+    clearTimeout(msgTimer); msgTimer = setTimeout(function () { el.className = "msg"; }, 4500);
+  }
 
   /* ===== auth ===== */
-  function showApp(s) { $("login-view").style.display = s ? "none" : ""; $("app-view").style.display = s ? "" : "none"; if (s) loadAll(); }
+  function showApp(s) { $("login-view").style.display = s ? "none" : ""; $("app-view").style.display = s ? "flex" : "none"; if (s) loadAll(); }
   sb.auth.getSession().then(function (r) { showApp(r.data.session); });
   $("login-form").addEventListener("submit", function (e) {
     e.preventDefault();
     sb.auth.signInWithPassword({ email: $("l-email").value.trim(), password: $("l-pass").value }).then(function (r) {
-      if (r.error) { var m = $("login-msg"); m.className = "msg err"; m.textContent = r.error.message; } else showApp(r.data.session);
+      if (r.error) { var m = $("login-msg"); m.className = "msg err"; m.style.position = "static"; m.textContent = r.error.message; } else showApp(r.data.session);
     });
   });
   $("logout-btn").addEventListener("click", function () { sb.auth.signOut().then(function () { showApp(null); }); });
-  document.querySelectorAll(".tab-btn").forEach(function (b) {
+  $("view-site").addEventListener("click", function () { window.open("index.html", "_blank"); });
+  document.querySelectorAll(".side-link[data-tab]").forEach(function (b) {
     b.addEventListener("click", function () {
-      document.querySelectorAll(".tab-btn").forEach(function (x) { x.classList.remove("active"); });
+      document.querySelectorAll(".side-link").forEach(function (x) { x.classList.remove("active"); });
       document.querySelectorAll(".panel").forEach(function (x) { x.classList.remove("active"); });
       b.classList.add("active"); $("panel-" + b.getAttribute("data-tab")).classList.add("active");
+      if (b.getAttribute("data-tab") === "media") mediaLoad();
     });
   });
-  function loadAll() { loadSubs(); pbLoad(); fbLoad(); jpObj.load(); pfObj.load(); tsObj.load(); nvLoad(); wlLoad(); }
+  function loadAll() { dashLoad(); loadSubs(); pbLoad(); fbLoad(); jpObj.load(); pfObj.load(); tsObj.load(); nvLoad(); wlLoad(); }
+
+  /* ===== dashboard ===== */
+  function count(t) { return sb.from(t).select("*", { count: "exact", head: true }).then(function (r) { return r.count || 0; }); }
+  function dashLoad() {
+    $("dash-date").textContent = new Date().toDateString();
+    Promise.all([count("form_submissions"), count("journal_posts"), count("portfolio_items"), count("page_sections"), count("testimonials")]).then(function (c) {
+      var cards = [["Submissions", c[0]], ["Journal Posts", c[1]], ["Portfolio Items", c[2]], ["Page Sections", c[3]], ["Testimonials", c[4]]];
+      $("dash-cards").innerHTML = cards.map(function (x) { return '<div class="dash-card"><div class="n">' + x[1] + '</div><div class="l">' + x[0] + "</div></div>"; }).join("");
+    });
+    sb.from("form_submissions").select("*").order("created_at", { ascending: false }).limit(5).then(function (r) {
+      if (r.error || !r.data.length) { $("dash-recent").innerHTML = '<div class="empty">No submissions yet.</div>'; return; }
+      $("dash-recent").innerHTML = r.data.map(function (s) {
+        var d = s.data || {};
+        return '<div class="row"><div class="top"><span class="t">' + esc(d.name || "Anonymous") + ' — ' + esc(s.form) + '</span><span class="m">' + new Date(s.created_at).toLocaleString() + "</span></div>" +
+          '<div class="body">' + esc((d.message || d.goals || "").slice(0, 180)) + "</div></div>";
+      }).join("");
+    });
+  }
 
   /* ===== submissions ===== */
   var SUB_STATUSES = ["new", "reviewing", "shortlisted", "contacted", "accepted", "waitlisted", "rejected", "done", "archived"];
-  function loadSubs() {
-    var f = $("sub-filter").value;
-    var q = "form_submissions";
-    var sel = sb.from(q).select("*").order("created_at", { ascending: false });
-    if (f) sel = sel.eq("form", f);
-    sel.then(function (r) {
-      if (r.error) return msg("Submissions: " + r.error.message, false);
-      $("cnt-subs").textContent = r.data.length;
-      var p = $("sub-list");
-      if (!r.data.length) { p.innerHTML = '<div class="empty">No submissions yet.</div>'; return; }
-      p.innerHTML = r.data.map(function (s) {
-        var d = s.data || {};
-        var pairs = Object.keys(d).map(function (k) { return k + ": " + d[k]; }).join("\n");
-        var opts = SUB_STATUSES.map(function (x) { return "<option" + (s.status === x ? " selected" : "") + ">" + x + "</option>"; }).join("");
-        return '<div class="row"><div class="top"><span class="t">' + esc(d.name || "Anonymous") + ' — ' + esc(s.form) + '</span><span class="m">' + new Date(s.created_at).toLocaleString() + "</span></div>" +
-          '<div class="body">' + esc(pairs) + "</div>" +
-          '<div class="actions">Status: <select class="mini" data-st="' + s.id + '">' + opts + "</select>" +
-          (d.email ? '<a class="abtn" href="mailto:' + esc(d.email) + '">Reply by Email</a>' : "") +
-          '<button class="abtn danger" data-del="' + s.id + '">Delete</button></div></div>';
-      }).join("");
-      p.querySelectorAll("[data-st]").forEach(function (s2) {
-        s2.addEventListener("change", function () {
-          sb.from("form_submissions").update({ status: s2.value }).eq("id", s2.getAttribute("data-st")).then(function (r2) { r2.error ? msg(r2.error.message, false) : msg("Status updated", true); });
-        });
+  var subCache = [];
+  function renderSubs() {
+    var q = ($("sub-search").value || "").toLowerCase();
+    var rows = subCache.filter(function (s) {
+      if (!q) return true;
+      var d = s.data || {};
+      return String(d.name || "").toLowerCase().indexOf(q) !== -1 || String(d.email || "").toLowerCase().indexOf(q) !== -1;
+    });
+    var p = $("sub-list");
+    if (!rows.length) { p.innerHTML = '<div class="empty">No submissions found.</div>'; return; }
+    p.innerHTML = rows.map(function (s) {
+      var d = s.data || {};
+      var pairs = Object.keys(d).map(function (k) { return k + ": " + d[k]; }).join("\n");
+      var opts = SUB_STATUSES.map(function (x) { return "<option" + (s.status === x ? " selected" : "") + ">" + x + "</option>"; }).join("");
+      return '<div class="row"><div class="top"><span class="t">' + esc(d.name || "Anonymous") + ' — ' + esc(s.form) + '</span><span class="m">' + new Date(s.created_at).toLocaleString() + "</span></div>" +
+        '<div class="body">' + esc(pairs) + "</div>" +
+        '<div class="actions">Status: <select class="mini" data-st="' + s.id + '">' + opts + "</select>" +
+        (d.email ? '<a class="abtn" href="mailto:' + esc(d.email) + '">Reply by Email</a>' : "") +
+        '<button class="abtn danger" data-del="' + s.id + '">Delete</button></div></div>';
+    }).join("");
+    p.querySelectorAll("[data-st]").forEach(function (s2) {
+      s2.addEventListener("change", function () {
+        sb.from("form_submissions").update({ status: s2.value }).eq("id", s2.getAttribute("data-st")).then(function (r2) { r2.error ? msg(r2.error.message, false) : msg("Status updated", true); });
       });
-      p.querySelectorAll("[data-del]").forEach(function (b) {
-        b.addEventListener("click", function () {
-          if (!confirm("Delete this submission permanently?")) return;
-          sb.from("form_submissions").delete().eq("id", b.getAttribute("data-del")).then(function (r2) { r2.error ? msg(r2.error.message, false) : loadSubs(); });
-        });
+    });
+    p.querySelectorAll("[data-del]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        if (!confirm("Delete this submission permanently?")) return;
+        sb.from("form_submissions").delete().eq("id", b.getAttribute("data-del")).then(function (r2) { r2.error ? msg(r2.error.message, false) : loadSubs(); });
       });
     });
   }
+  function loadSubs() {
+    var f = $("sub-filter").value;
+    var sel = sb.from("form_submissions").select("*").order("created_at", { ascending: false });
+    if (f) sel = sel.eq("form", f);
+    sel.then(function (r) {
+      if (r.error) return msg("Submissions: " + r.error.message, false);
+      subCache = r.data;
+      $("cnt-subs").textContent = r.data.length;
+      renderSubs();
+    });
+  }
   $("sub-filter").addEventListener("change", loadSubs);
+  $("sub-search").addEventListener("input", renderSubs);
 
   /* ===== page builder ===== */
-  var KIND_LABEL = { hero: "Home Hero (cinematic)", page_hero: "Page Hero", stats: "Statistics Strip", era_strip: "Journey Strip", split: "Image + Text Story", cards: "Card Grid", quote: "Pull Quote", numlist: "Numbered List", faq: "FAQ Accordion", timeline: "Timeline", cta: "Call to Action Band", richtext: "Text Section", system: "Dynamic Component" };
+  var KIND_LABEL = { hero: "Home Hero (cinematic)", page_hero: "Page Hero", stats: "Statistics Strip", era_strip: "Journey Strip", split: "Image + Text Story", cards: "Card Grid", quote: "Pull Quote", numlist: "Numbered List", faq: "FAQ Accordion", timeline: "Timeline", cta: "Call-to-Action Band", richtext: "Text Section", system: "Dynamic Component" };
+  var KIND_DESC = { hero: "Full-screen opening for the home page", page_hero: "Dark page opening with headline and intro", stats: "Row of big numbers (41+, 1992…)", era_strip: "Horizontal darkroom-to-digital era cards", split: "Photo on one side, story text on the other", cards: "Grid of cards — services, programs, audiences", quote: "Large centered italic quotation", numlist: "Numbered steps or topics with descriptions", faq: "Questions that expand on click", timeline: "Vertical career timeline with year markers", cta: "Dark banner with buttons at the end of a page", richtext: "Simple heading + paragraphs", system: "Live component: portfolio grid, journal list, forms, testimonials" };
   var KIND_FIELDS = {
     hero: [["eyebrow", "Small top line"], ["heading", "Headline (<em> allowed)"], ["lede", "Intro paragraph", "textarea"]],
     page_hero: [["eyebrow", "Small top line"], ["heading", "Headline (<em> allowed)"], ["lede", "Intro paragraph", "textarea"]],
     stats: [],
     era_strip: [["eyebrow", "Small top line"], ["heading", "Headline (<em> allowed)"], ["link_label", "Bottom link text"], ["link_href", "Bottom link address"]],
-    split: [["eyebrow", "Small top line"], ["heading", "Headline (<em> allowed)"], ["bg", "Background (empty, dark, darker, paper)"], ["image_side", "Image side (left / right)"], ["image_cat", "Image label"], ["image_caption", "Image caption"], ["image_url", "Image URL (optional)"]],
+    split: [["eyebrow", "Small top line"], ["heading", "Headline (<em> allowed)"], ["bg", "Background (empty, dark, darker, paper)"], ["image_side", "Image side (left / right)"], ["image_cat", "Image label"], ["image_caption", "Image caption"], ["image_url", "Image (upload or URL)"]],
     cards: [["eyebrow", "Small top line"], ["heading", "Headline (<em> allowed)"], ["lede", "Intro paragraph", "textarea"], ["bg", "Background (empty, dark, paper)"], ["columns", "Columns (2 or 3)"]],
     quote: [["text", "Quote text", "textarea"], ["cite", "Attribution"], ["bg", "Background (empty, dark, paper)"]],
     numlist: [["eyebrow", "Small top line"], ["heading", "Headline"], ["bg", "Background (empty, dark, paper)"]],
@@ -317,9 +435,53 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
     richtext: [["eyebrow", "Small top line"], ["heading", "Headline"], ["bg", "Background (empty, dark, paper)"]],
     system: [["component", "Component (portfolio_grid, journal_list, testimonials, contact_form, mentorship_form)"], ["eyebrow", "Small top line"], ["heading", "Headline"], ["lede", "Intro paragraph", "textarea"]]
   };
+  /* structured list editors: key, label, columns hint, mode */
+  var KIND_LISTS = {
+    hero: [["buttons", "Buttons — one per line: Label | address | style (style: red, solid or empty)"], ["meta", "Small facts under buttons — one per line", "lines"]],
+    page_hero: [["buttons", "Buttons — one per line: Label | address | style"]],
+    stats: [["items", "Numbers — one per line: Number | Label (e.g. 41+ | Years of Experience)", "pipe", ["num", "label"]]],
+    era_strip: [["items", "Eras — one per line: Era | Name | Description", "pipe", ["yr", "nm", "text"]]],
+    split: [["paragraphs", "Story paragraphs — separate with a blank line", "para"], ["buttons", "Buttons — one per line: Label | address | style"]],
+    cards: [["items", "Cards — one per line: Number | Title | Text | Link text | Link address", "pipe", ["idx", "title", "text", "link_label", "link_href"]], ["buttons", "Buttons under the grid — Label | address | style"]],
+    numlist: [["paragraphs", "Intro paragraphs — separate with a blank line", "para"], ["items", "List entries — one per line: Title | Description", "pipe", ["title", "text"]]],
+    faq: [["items", "Questions — one per line: Question | Answer", "pipe", ["q", "a"]]],
+    timeline: [["items", "Milestones — one per line: Year | Title | Description | Era tag", "pipe", ["yr", "title", "text", "tag"]], ["buttons", "Buttons — Label | address | style"]],
+    cta: [["buttons", "Buttons — one per line: Label | address | style"]],
+    richtext: [["paragraphs", "Paragraphs — separate with a blank line", "para"]]
+  };
+  function serializeList(kind, key, arr) {
+    var def = (KIND_LISTS[kind] || []).find(function (x) { return x[0] === key; });
+    if (!def || !arr) return "";
+    if (def[2] === "para") return arr.join("\n\n");
+    if (def[2] === "lines") return arr.join("\n");
+    if (key === "buttons") return arr.map(function (b) { return [b.label, b.href, b.style || ""].join(" | ").replace(/ \| $/, ""); }).join("\n");
+    var cols = def[3];
+    return arr.map(function (it) { return cols.map(function (c) { return it[c] == null ? "" : it[c]; }).join(" | ").replace(/( \| )+$/, ""); }).join("\n");
+  }
+  function parseList(kind, key, text) {
+    var def = (KIND_LISTS[kind] || []).find(function (x) { return x[0] === key; });
+    if (!def) return null;
+    text = text.trim();
+    if (!text) return [];
+    if (def[2] === "para") return text.split(/\n\s*\n/).map(function (s) { return s.trim(); }).filter(Boolean);
+    if (def[2] === "lines") return text.split("\n").map(function (s) { return s.trim(); }).filter(Boolean);
+    return text.split("\n").map(function (line) {
+      var parts = line.split("|").map(function (s) { return s.trim(); });
+      if (key === "buttons") {
+        var b = { label: parts[0] || "", href: parts[1] || "#" };
+        if (parts[2]) b.style = parts[2];
+        return b;
+      }
+      var cols = def[3], obj = {};
+      cols.forEach(function (c, i) { if (parts[i]) obj[c] = parts[i]; });
+      return obj;
+    }).filter(function (x) { return key === "buttons" ? x.label : Object.keys(x).length; });
+  }
+
   var pbRows = [], pbEditing = null;
   function pbLoad() {
     var pg = $("pb-page").value;
+    $("pb-preview").href = pg === "index" ? "index.html" : pg + ".html";
     sb.from("page_sections").select("*").eq("page", pg).order("sort").then(function (r) {
       if (r.error) return msg("Pages: " + r.error.message, false);
       pbRows = r.data;
@@ -340,13 +502,11 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
       el.querySelectorAll("[data-mv]").forEach(function (b) {
         b.addEventListener("click", function () {
           var id = b.getAttribute("data-id"), dir = parseInt(b.getAttribute("data-mv"), 10);
-          var i = pbRows.findIndex(function (x) { return x.id === id; });
-          var j = i + dir;
+          var i = pbRows.findIndex(function (x) { return x.id === id; }), j = i + dir;
           if (j < 0 || j >= pbRows.length) return;
-          var a = pbRows[i], c = pbRows[j];
           Promise.all([
-            sb.from("page_sections").update({ sort: c.sort }).eq("id", a.id),
-            sb.from("page_sections").update({ sort: a.sort }).eq("id", c.id)
+            sb.from("page_sections").update({ sort: pbRows[j].sort }).eq("id", pbRows[i].id),
+            sb.from("page_sections").update({ sort: pbRows[i].sort }).eq("id", pbRows[j].id)
           ]).then(pbLoad);
         });
       });
@@ -385,6 +545,9 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
       if (f[0].indexOf("image_url") !== -1) return '<div class="field"><label>' + f[1] + '</label><div style="display:flex;gap:.6rem"><input type="text" id="pbf-' + f[0] + '" data-k="' + f[0] + '" value="' + esc(val) + '" style="flex:1"><button type="button" class="abtn" data-upload="pbf-' + f[0] + '">Upload…</button></div></div>';
       return '<div class="field"><label>' + f[1] + '</label><input type="text" data-k="' + f[0] + '" value="' + esc(val) + '"></div>';
     }).join("");
+    $("pb-lists").innerHTML = (KIND_LISTS[s.kind] || []).map(function (def) {
+      return '<div class="field" style="margin-top:1rem"><label>' + def[1] + '</label><textarea data-list="' + def[0] + '" style="min-height:110px">' + esc(serializeList(s.kind, def[0], (s.data || {})[def[0]])) + "</textarea></div>";
+    }).join("");
     $("pb-json").value = JSON.stringify(s.data || {}, null, 2);
     $("pb-editor").scrollIntoView({ behavior: "smooth", block: "start" });
   }
@@ -392,9 +555,13 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
     var data;
     try { data = JSON.parse($("pb-json").value || "{}"); } catch (e) { return msg("The Advanced JSON box contains a mistake: " + e.message, false); }
     $("pb-fields").querySelectorAll("[data-k]").forEach(function (inp) {
-      var v = inp.value.trim();
-      var k = inp.getAttribute("data-k");
+      var v = inp.value.trim(), k = inp.getAttribute("data-k");
       if (v === "") delete data[k]; else data[k] = k === "columns" ? (parseInt(v, 10) || 3) : v;
+    });
+    $("pb-lists").querySelectorAll("[data-list]").forEach(function (ta) {
+      var k = ta.getAttribute("data-list");
+      var parsed = parseList(pbEditing.kind, k, ta.value);
+      if (parsed !== null) { if (parsed.length) data[k] = parsed; else delete data[k]; }
     });
     var s = pbEditing;
     var op = s.id ? sb.from("page_sections").update({ data: data, kind: s.kind }).eq("id", s.id)
@@ -406,11 +573,19 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
   });
   $("pb-cancel").addEventListener("click", function () { $("pb-editor").style.display = "none"; });
   $("pb-add").addEventListener("click", function () {
-    var kinds = Object.keys(KIND_LABEL);
-    var pick = prompt("Section type — type one of:\n\n" + kinds.map(function (k) { return k + "  (" + KIND_LABEL[k] + ")"; }).join("\n"), "richtext");
-    if (!pick || !KIND_LABEL[pick]) return;
-    pbEdit({ kind: pick, data: {} });
+    $("kind-grid").innerHTML = Object.keys(KIND_LABEL).map(function (k) {
+      return '<button class="kind-card" data-kind="' + k + '"><div class="kt">' + KIND_LABEL[k] + '</div><div class="kd">' + KIND_DESC[k] + "</div></button>";
+    }).join("");
+    $("kind-modal").classList.add("open");
+    $("kind-grid").querySelectorAll("[data-kind]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        $("kind-modal").classList.remove("open");
+        pbEdit({ kind: b.getAttribute("data-kind"), data: {} });
+      });
+    });
   });
+  $("kind-cancel").addEventListener("click", function () { $("kind-modal").classList.remove("open"); });
+  $("kind-modal").addEventListener("click", function (e) { if (e.target === $("kind-modal")) $("kind-modal").classList.remove("open"); });
   $("pb-import").addEventListener("click", function () {
     var pg = $("pb-page").value;
     var seed = (window.SK_SEED || {})[pg];
@@ -418,7 +593,7 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
     if (pbRows.length && !confirm("This page already has sections. Import defaults anyway (added after existing ones)?")) return;
     var base = pbRows.length ? Math.max.apply(null, pbRows.map(function (x) { return x.sort; })) : 0;
     var rows = seed.map(function (s, i) { return { page: pg, kind: s.kind, data: s.data, sort: base + (i + 1) * 10, visible: true }; });
-    sb.from("page_sections").insert(rows).then(function (r) { r.error ? msg(r.error.message, false) : (msg("Default sections imported — the live page is now editable here.", true), pbLoad()); });
+    sb.from("page_sections").insert(rows).then(function (r) { r.error ? msg(r.error.message, false) : (msg("Default sections imported — this page is now fully editable.", true), pbLoad()); });
   });
   $("pb-page").addEventListener("change", pbLoad);
 
@@ -430,15 +605,12 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
       if (r.error) return msg("Forms: " + r.error.message, false);
       fbRows = r.data;
       var el = $("fb-list");
-      if (!r.data.length) { el.innerHTML = '<div class="empty">No fields yet — the live site uses the original built-in form. Click "Import Default Fields" to load it here for editing.</div>'; return; }
+      if (!r.data.length) { el.innerHTML = '<div class="empty">No fields yet — the live site uses the original built-in form. Click "Import Default Fields" to edit it here.</div>'; return; }
       el.innerHTML = r.data.map(function (f, i) {
         return '<div class="row' + (f.visible ? "" : " hidden-row") + '"><div class="top"><span class="t">' + (i + 1) + ". " + esc(f.label) + '</span><span class="m">' + esc(f.type) + (f.required ? " · required" : "") + " · step " + (f.step || 1) + "</span></div>" +
-          '<div class="actions">' +
-          '<button class="abtn" data-mv="-1" data-id="' + f.id + '">↑</button>' +
-          '<button class="abtn" data-mv="1" data-id="' + f.id + '">↓</button>' +
+          '<div class="actions"><button class="abtn" data-mv="-1" data-id="' + f.id + '">↑</button><button class="abtn" data-mv="1" data-id="' + f.id + '">↓</button>' +
           '<button class="abtn" data-vis="' + f.id + '">' + (f.visible ? "Hide" : "Show") + "</button>" +
-          '<button class="abtn" data-ed="' + f.id + '">Edit</button>' +
-          '<button class="abtn danger" data-del="' + f.id + '">Delete</button></div></div>';
+          '<button class="abtn" data-ed="' + f.id + '">Edit</button><button class="abtn danger" data-del="' + f.id + '">Delete</button></div></div>';
       }).join("");
       el.querySelectorAll("[data-mv]").forEach(function (b) {
         b.addEventListener("click", function () {
@@ -510,11 +682,11 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
     var rows = seed.map(function (f, i) {
       return { form: fm, field_key: f.field_key, label: f.label, type: f.type, required: !!f.required, placeholder: f.placeholder || null, width: f.width || null, step: f.step || 1, options: f.options || [], show_if: f.show_if || null, sort: base + (i + 1) * 10, visible: true };
     });
-    sb.from("form_fields").insert(rows).then(function (r) { r.error ? msg(r.error.message, false) : (msg("Default fields imported — the live form is now editable here.", true), fbLoad()); });
+    sb.from("form_fields").insert(rows).then(function (r) { r.error ? msg(r.error.message, false) : (msg("Default fields imported — this form is now fully editable.", true), fbLoad()); });
   });
   $("fb-form").addEventListener("change", fbLoad);
 
-  /* ===== generic CRUD (journal / portfolio / testimonials) ===== */
+  /* ===== generic CRUD ===== */
   function bindCrud(cfg) {
     function load() {
       sb.from(cfg.table).select("*").order("created_at", { ascending: false }).then(function (r) {
@@ -563,7 +735,10 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
   });
   var pfObj = bindCrud({
     table: "portfolio_items", list: "pf-list", save: "pf-save", clearBtn: "pf-clear", idField: "pf-id",
-    render: function (p) { return '<div class="row"><div class="top"><span class="t">' + esc(p.title) + '</span><span class="m">' + esc(p.category) + " · " + esc(p.era) + (p.published ? "" : " · HIDDEN") + '</span></div><div class="body">' + esc(p.caption || "") + (p.image_url ? "\nimage: " + esc(p.image_url) : "\n(placeholder frame)") + '</div><div class="actions"><button class="abtn" data-edit="' + p.id + '">Edit</button><button class="abtn danger" data-del="' + p.id + '">Delete</button></div></div>'; },
+    render: function (p) {
+      var thumb = p.image_url ? '<img src="' + esc(p.image_url) + '" alt="" style="width:52px;height:52px;object-fit:cover;float:right;margin-left:.8rem">' : "";
+      return '<div class="row"><div class="top"><span class="t">' + thumb + esc(p.title) + '</span><span class="m">' + esc(p.category) + " · " + esc(p.era) + (p.published ? "" : " · HIDDEN") + '</span></div><div class="body">' + esc(p.caption || "") + '</div><div class="actions"><button class="abtn" data-edit="' + p.id + '">Edit</button><button class="abtn danger" data-del="' + p.id + '">Delete</button></div></div>';
+    },
     collect: function () {
       var t = $("pf-title").value.trim();
       if (!t) { msg("Title is required", false); return null; }
@@ -583,6 +758,35 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
     fill: function (t) { $("ts-id").value = t.id; $("ts-name").value = t.name; $("ts-role").value = t.role || ""; $("ts-quote").value = t.quote; $("ts-pub").value = String(t.published); $("ts-form-title").textContent = "Edit Testimonial"; },
     clear: function () { ["ts-id", "ts-name", "ts-role", "ts-quote"].forEach(function (i) { $(i).value = ""; }); $("ts-pub").value = "true"; $("ts-form-title").textContent = "New Testimonial"; }
   });
+
+  /* ===== media library ===== */
+  function mediaLoad() {
+    sb.storage.from("media").list("", { limit: 200, sortBy: { column: "created_at", order: "desc" } }).then(function (r) {
+      var grid = $("media-grid");
+      if (r.error) { grid.innerHTML = '<div class="empty">Could not load media: ' + esc(r.error.message) + ' (has the "media" bucket been created?)</div>'; return; }
+      var files = r.data.filter(function (f) { return f.name && f.name.indexOf(".") !== -1; });
+      if (!files.length) { grid.innerHTML = '<div class="empty">No files yet — click "Upload Files…" above.</div>'; return; }
+      grid.innerHTML = files.map(function (f) {
+        var url = sb.storage.from("media").getPublicUrl(f.name).data.publicUrl;
+        var isImg = /\.(jpe?g|png|webp|gif|avif)$/i.test(f.name);
+        return '<div class="media-card"><div class="thumb" style="' + (isImg ? "background-image:url('" + url + "')" : "") + '">' + (isImg ? "" : esc(f.name.split(".").pop().toUpperCase())) + "</div>" +
+          '<div class="mi"><div class="nm">' + esc(f.name) + '</div><div class="actions">' +
+          '<button class="abtn" data-copy="' + esc(url) + '">Copy URL</button>' +
+          '<button class="abtn danger" data-mdel="' + esc(f.name) + '">Delete</button></div></div></div>';
+      }).join("");
+      grid.querySelectorAll("[data-copy]").forEach(function (b) {
+        b.addEventListener("click", function () {
+          navigator.clipboard.writeText(b.getAttribute("data-copy")).then(function () { msg("URL copied — paste it into any image field.", true); });
+        });
+      });
+      grid.querySelectorAll("[data-mdel]").forEach(function (b) {
+        b.addEventListener("click", function () {
+          if (!confirm("Delete this file permanently? Anywhere it is used on the site will lose the image.")) return;
+          sb.storage.from("media").remove([b.getAttribute("data-mdel")]).then(function (r2) { r2.error ? msg(r2.error.message, false) : mediaLoad(); });
+        });
+      });
+    });
+  }
 
   /* ===== nav flyouts ===== */
   var nvCache = [];
@@ -627,7 +831,7 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
   });
   $("nv-clear").addEventListener("click", function () { ["nv-id", "nv-eyebrow", "nv-desc", "nv-links"].forEach(function (i) { $(i).value = ""; }); });
 
-  /* ===== welcome settings ===== */
+  /* ===== welcome ===== */
   var WL_KEYS = { "wl-enabled": "welcome_enabled", "wl-frequency": "welcome_frequency", "wl-eyebrow": "welcome_eyebrow", "wl-headline": "welcome_headline", "wl-sub": "welcome_sub", "wl-cta": "welcome_cta", "wl-image": "welcome_image_url", "wl-sound": "welcome_sound", "wl-sound-url": "welcome_sound_url" };
   function wlLoad() {
     sb.from("site_settings").select("*").then(function (r) {
@@ -642,11 +846,10 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
     sb.from("site_settings").upsert(rows).then(function (r) { r.error ? msg(r.error.message, false) : msg("Welcome settings saved", true); });
   });
 
-  /* ===== media upload (Supabase Storage bucket: "media") ===== */
+  /* ===== uploads (Supabase Storage "media" bucket) ===== */
   var upTargetId = null;
   var upFile = document.createElement("input");
-  upFile.type = "file";
-  upFile.accept = "image/*,audio/*";
+  upFile.type = "file"; upFile.accept = "image/*,audio/*"; upFile.multiple = false;
   upFile.style.display = "none";
   document.body.appendChild(upFile);
   document.addEventListener("click", function (e) {
@@ -666,9 +869,10 @@ select.mini, .toolbar select { background: #11100e; color: #cfc9ba; border: 1px 
     sb.storage.from("media").upload(path, file, { cacheControl: "31536000", upsert: false }).then(function (r) {
       if (r.error) return msg("Upload failed: " + r.error.message + " (has the 'media' bucket been created?)", false);
       var pub = sb.storage.from("media").getPublicUrl(path);
+      if (upTargetId === "__media__") { mediaLoad(); msg("Uploaded to the Media Library.", true); return; }
       var input = document.getElementById(upTargetId);
       if (input) input.value = pub.data.publicUrl;
-      msg("Uploaded — image address filled in. Remember to click Save.", true);
+      msg("Uploaded — address filled in. Remember to click Save.", true);
     });
   });
 })();
